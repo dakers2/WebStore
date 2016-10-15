@@ -1,0 +1,20 @@
+﻿@model List<WebStore.Models.ProductModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Product List</h2>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <h3>@item.Name</h3>
+            <img src="@item.Image" />
+            <p>@item.Description</p>
+            <p>@item.Price</p>
+
+            <button type="submit" name="addToCart" value="Add To Cart" class="btn btn-primary">Add To Cart</button>
+        </div>
+    }
+</div>

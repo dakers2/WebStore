@@ -1,0 +1,41 @@
+﻿@model List<WebStore.Models.ProductModel>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h1>Sparkling Sugar Confectionary</h1>
+
+<div class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner" role="listbox">
+        @foreach (var item in Model)
+        {
+            if (item.Featured == true)
+            {
+                <div class="item">
+                    <img src="@item.Image" />
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<div class="jumbotron">
+    <p class="lead">Our cookies, candies, and cakes are made with the best locally sourced ingredients. We pride ourselves on delivering the freshest confections straight to your door!</p>
+    <p><a href="#" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Cookies</h2>
+        <a href="#"><img class="home-image" src="/Images/choc-chip.jpg" /></a>
+    </div>
+    <div class="col-md-4">
+        <h2>Candies</h2>
+        <a href="#"><img class="home-image" src="/Images/cake-pops.jpg" /></a>
+    </div>
+    <div class="col-md-4">
+        <h2>Cakes</h2>
+        <a href="#"><img class="home-image" src="/Images/france-cake.jpg" /></a>
+    </div>
+</div>

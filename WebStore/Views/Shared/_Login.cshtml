@@ -1,0 +1,11 @@
+﻿<p>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <span>Welcome, @User.Identity.Name!</span>
+        <span>@Html.ActionLink("Logout", "logout", "Account")</span>
+    }
+    else
+    {
+    @Html.ActionLink("Login", "Login", "Account", null, new { @class = "btn-login" })
+    }
+</p>

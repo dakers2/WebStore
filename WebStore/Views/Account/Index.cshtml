@@ -1,0 +1,26 @@
+﻿@model WebStore.Models.AccountDetailsModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Account Details</h2>
+
+@Html.ActionLink("Change Password", "Password", "Account")
+@Html.ActionLink("Change Address", "Address", "Account")
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName)
+        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.FirstName)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName)
+        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.LastName)
+    </div>
+    <input type="submit" title="Update Info" value="Update Info" class="btn btn-primary" />
+}

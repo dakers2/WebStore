@@ -1,0 +1,503 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WebStoreDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="int" Nullable="false" />
+          <Property Name="Line1" Type="nchar" MaxLength="50" />
+          <Property Name="Line2" Type="nchar" MaxLength="50" />
+          <Property Name="City" Type="nchar" MaxLength="50" />
+          <Property Name="State" Type="nchar" MaxLength="50" />
+          <Property Name="Zipcode" Type="int" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="20" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="10" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressId" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="OrderDetailId" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="OrderOty" Type="int" Nullable="false" />
+          <Property Name="LineTotal" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderHeader">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ShipDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="ShipToAddress" Type="int" Nullable="false" />
+          <Property Name="BillToAddress" Type="int" Nullable="false" />
+          <Property Name="ShipMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalDue" Type="money" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="SubTotal" Type="money" Nullable="false" />
+          <Property Name="TaxAmt" Type="money" Nullable="false" />
+          <Property Name="ShipAmt" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Image" Type="nchar" MaxLength="100" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="Featured" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Customer_ToTable">
+          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_OrderHeader_OrderId">
+          <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderHeader">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Product_ProductId">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderHeader_AddressBill_AddressId">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="OrderHeader">
+              <PropertyRef Name="BillToAddress" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderHeader_AddressShip_AddressId">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="OrderHeader">
+              <PropertyRef Name="ShipToAddress" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderHeader_Customer_CustomerId">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="OrderHeader">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ToTable">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WebStoreDatabaseModelStoreContainer">
+          <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderHeader" EntityType="Self.OrderHeader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Customer_ToTable" Association="Self.FK_Customer_ToTable">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_OrderHeader_OrderId" Association="Self.FK_OrderDetail_OrderHeader_OrderId">
+            <End Role="OrderHeader" EntitySet="OrderHeader" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Product_ProductId" Association="Self.FK_OrderDetail_Product_ProductId">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderHeader_AddressBill_AddressId" Association="Self.FK_OrderHeader_AddressBill_AddressId">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="OrderHeader" EntitySet="OrderHeader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderHeader_AddressShip_AddressId" Association="Self.FK_OrderHeader_AddressShip_AddressId">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="OrderHeader" EntitySet="OrderHeader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderHeader_Customer_CustomerId" Association="Self.FK_OrderHeader_Customer_CustomerId">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="OrderHeader" EntitySet="OrderHeader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ToTable" Association="Self.FK_Product_ToTable">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WebStoreDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="Int32" Nullable="false" />
+          <Property Name="Line1" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Line2" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Zipcode" Type="Int32" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_ToTable" FromRole="Address" ToRole="Customer" />
+          <NavigationProperty Name="OrderHeaders" Relationship="Self.FK_OrderHeader_AddressBill_AddressId" FromRole="Address" ToRole="OrderHeader" />
+          <NavigationProperty Name="OrderHeaders1" Relationship="Self.FK_OrderHeader_AddressShip_AddressId" FromRole="Address" ToRole="OrderHeader" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Category1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_ToTable" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressId" Type="Int32" />
+          <NavigationProperty Name="Address" Relationship="Self.FK_Customer_ToTable" FromRole="Customer" ToRole="Address" />
+          <NavigationProperty Name="OrderHeaders" Relationship="Self.FK_OrderHeader_Customer_CustomerId" FromRole="Customer" ToRole="OrderHeader" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="OrderDetailId" Type="Int32" Nullable="false" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="OrderOty" Type="Int32" Nullable="false" />
+          <Property Name="LineTotal" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OrderHeader" Relationship="Self.FK_OrderDetail_OrderHeader_OrderId" FromRole="OrderDetail" ToRole="OrderHeader" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_OrderDetail_Product_ProductId" FromRole="OrderDetail" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="OrderHeader">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ShipDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="ShipToAddress" Type="Int32" Nullable="false" />
+          <Property Name="BillToAddress" Type="Int32" Nullable="false" />
+          <Property Name="ShipMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TotalDue" Type="Decimal" Precision="19" Scale="4" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="SubTotal" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="TaxAmt" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="ShipAmt" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Address" Relationship="Self.FK_OrderHeader_AddressBill_AddressId" FromRole="OrderHeader" ToRole="Address" />
+          <NavigationProperty Name="Address1" Relationship="Self.FK_OrderHeader_AddressShip_AddressId" FromRole="OrderHeader" ToRole="Address" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_OrderHeader_Customer_CustomerId" FromRole="OrderHeader" ToRole="Customer" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetail_OrderHeader_OrderId" FromRole="OrderHeader" ToRole="OrderDetail" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Image" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Featured" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_Product_ToTable" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetail_Product_ProductId" FromRole="Product" ToRole="OrderDetail" />
+        </EntityType>
+        <Association Name="FK_Customer_ToTable">
+          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderHeader_AddressBill_AddressId">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="OrderHeader">
+              <PropertyRef Name="BillToAddress" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderHeader_AddressShip_AddressId">
+          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="OrderHeader">
+              <PropertyRef Name="ShipToAddress" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ToTable">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderHeader_Customer_CustomerId">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="OrderHeader">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_OrderHeader_OrderId">
+          <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderHeader">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Product_ProductId">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WebStoreDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Addresses" EntityType="Self.Address" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+          <EntitySet Name="OrderHeaders" EntityType="Self.OrderHeader" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <AssociationSet Name="FK_Customer_ToTable" Association="Self.FK_Customer_ToTable">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderHeader_AddressBill_AddressId" Association="Self.FK_OrderHeader_AddressBill_AddressId">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="OrderHeader" EntitySet="OrderHeaders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderHeader_AddressShip_AddressId" Association="Self.FK_OrderHeader_AddressShip_AddressId">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="OrderHeader" EntitySet="OrderHeaders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ToTable" Association="Self.FK_Product_ToTable">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderHeader_Customer_CustomerId" Association="Self.FK_OrderHeader_Customer_CustomerId">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="OrderHeader" EntitySet="OrderHeaders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_OrderHeader_OrderId" Association="Self.FK_OrderDetail_OrderHeader_OrderId">
+            <End Role="OrderHeader" EntitySet="OrderHeaders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Product_ProductId" Association="Self.FK_OrderDetail_Product_ProductId">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WebStoreDatabaseModelStoreContainer" CdmEntityContainer="WebStoreDatabaseEntities">
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="Line1" ColumnName="Line1" />
+                <ScalarProperty Name="Line2" ColumnName="Line2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Category1" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="OrderOty" ColumnName="OrderOty" />
+                <ScalarProperty Name="LineTotal" ColumnName="LineTotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderHeaders">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.OrderHeader">
+              <MappingFragment StoreEntitySet="OrderHeader">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="ShipDate" ColumnName="ShipDate" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ShipToAddress" ColumnName="ShipToAddress" />
+                <ScalarProperty Name="BillToAddress" ColumnName="BillToAddress" />
+                <ScalarProperty Name="ShipMethod" ColumnName="ShipMethod" />
+                <ScalarProperty Name="TotalDue" ColumnName="TotalDue" />
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+                <ScalarProperty Name="TaxAmt" ColumnName="TaxAmt" />
+                <ScalarProperty Name="ShipAmt" ColumnName="ShipAmt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Featured" ColumnName="Featured" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
