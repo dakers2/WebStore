@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SendGrid.Helpers.Mail;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -62,16 +64,82 @@ namespace WebStore.Controllers
                 }
                 else
                 {
-                    // TODO: Set up email confirmation tokens
-                    WebMatrix.WebData.WebSecurity.CreateUserAndAccount(model.Email, model.Password, null, false);
-                    FormsAuthentication.SetAuthCookie(model.Email, true);
+                    string token = WebMatrix.WebData.WebSecurity.CreateUserAndAccount(model.Email, model.Password, 
+                        new
+                        {
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            Email = model.Email,
+                            Password = model.Password
+                        },
+                        true);
+
+                    string apiKey = ConfigurationManager.AppSettings["SendGrid.Key"];
+                    SendGrid.SendGridAPIClient client = new SendGrid.SendGridAPIClient(apiKey);
+
+                    Email from = new Email("admin@webstore.com");
+                    string subject = "Complete your WebStore registration!";
+                    Email to = new Email(model.Email);
+
+                    string emailContent = string.Format("<html><body><a href=\"{0}\">Complete your registration</a></body></html>", Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/RegisterConfirm/" + HttpUtility.UrlEncode(token) + "?email=" + HttpUtility.UrlEncode(model.Email));
+                    Content content = new Content("text/HTML", emailContent);
+                    Mail mail = new Mail(from, subject, to, content);
+
+                    client.client.mail.send.post(requestBody: mail.Get());
+
+                    return RedirectToAction("RegisterComplete");
                 }
-                return RedirectToAction("Index", "Home");
             }
-            else
-            {
                 return View(model);
-            }
+        }
+
+        // GET: RegisterComplete
+        [AllowAnonymous]
+        public ActionResult RegisterComplete()
+        {
+            return View();
+        }
+        
+        // GET: RegisterConfirm
+        [AllowAnonymous]
+        public ActionResult RegisterConfirm(string id, string email)
+        {
+            if (WebMatrix.WebData.WebSecurity.ConfirmAccount(email, id))
+                ViewBag.Confirmed = true;
+            return View();   
+        }
+
+        // GET: PasswordForgot
+        public ActionResult ForgotPassword()
+        {
+            RegistrationModel model = new RegistrationModel();
+            string token = WebMatrix.WebData.WebSecurity.GeneratePasswordResetToken(model.Email);
+
+            string apiKey = ConfigurationManager.AppSettings["SendGrid.Key"];
+            SendGrid.SendGridAPIClient client = new SendGrid.SendGridAPIClient(apiKey);
+
+            Email from = new Email("admin@webstore.com");
+            string subject = "WebStore Password Reset";
+            Email to = new Email(model.Email);
+
+            string emailContent = string.Format("<html><body><a href=\"{0}\">Reset my password</a></body></html>", 
+                Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/PasswordReset" 
+                + HttpUtility.UrlEncode(token) + "?email=" + HttpUtility.UrlEncode(model.Email));
+            Content content = new Content("text/HTML", emailContent);
+            Mail mail = new Mail(from, subject, to, content);
+
+            client.client.mail.send.post(requestBody: mail.Get());
+
+            return RedirectToAction("PasswordReset");
+        }
+
+        // GET: PasswordReset
+        [AllowAnonymous]
+        public ActionResult PasswordReset(string password, string token)
+        {
+            // TODO: password reset - This is probably broken.
+            WebMatrix.WebData.WebSecurity.ResetPassword(token, password);
+            return View();
         }
 
         // GET: Account/Logout
@@ -94,21 +162,15 @@ namespace WebStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (WebMatrix.WebData.WebSecurity.UserExists(model.Email))
+                if (WebMatrix.WebData.WebSecurity.Login(model.Email, model.Password, true))
                 {
-                    WebMatrix.WebData.WebSecurity.Login(model.Email, model.Password, false);
+                    // TODO: give user auth cookie so it can be used on cart page
+                    //pulls their data from the DB based on their customerId
                 }
-                else
-                {
-                    ModelState.AddModelError("Login", "Incorrect username or password.");
-                }
+                // TODO: Be sure error shows up if username/pass is incorrect
                 return RedirectToAction("Index", "Home");
             }
-            else
-            {
-                return View(model);
-            }
-            
+            return View(model);
         }
     }
 }

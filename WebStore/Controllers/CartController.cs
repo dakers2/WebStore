@@ -21,7 +21,7 @@ namespace WebStore.Controllers
         [HttpPost]
         public ActionResult Index(ProductModel model)
         {
-            // TODO: what happens when they click "to checkout?" - Be sure to update changes to cart in database!
+            // TODO: what happens when they click checkout? - Be sure to update changes to cart in database!
             return RedirectToAction("Index", "Checkout");
         }
     }

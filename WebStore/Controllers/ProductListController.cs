@@ -65,8 +65,7 @@ namespace WebStore.Controllers
             //TODO: new entity (using), create line item, create the header, add new line item to header, save cart as cookie so we can use this order on the checkout page
             //save to database
             //clear the cookie after order is placed
-
-            //instead of cookie, you can do something else...
+            
             return View(model);
         }
     }
