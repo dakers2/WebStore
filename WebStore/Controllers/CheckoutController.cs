@@ -27,15 +27,15 @@ namespace WebStore.Controllers
                 {
                     int orderNumber = int.Parse(Request.Cookies["OrderNumber"].Value);
                     var orderHeader = entities.OrderHeaders.Single(x => x.OrderId == orderNumber);
-                    //var shipMethod = entities.OrderHeaders.Single(x => x.ShipMethod);
+                    var shipMethod = entities.OrderHeaders.Single(x => x.ShipMethod == model.ShippingMethod);
                     var address = entities.Addresses.FirstOrDefault(
-                        x => x.Line1 == model.ShippingAddress1 
-                        && x.Line2 == model.ShippingAddress2 
-                        && x.City == model.ShippingCity 
-                        && x.State == model.ShippingState 
+                        x => x.Line1 == model.ShippingAddress1
+                        && x.Line2 == model.ShippingAddress2
+                        && x.City == model.ShippingCity
+                        && x.State == model.ShippingState
                         && x.Zipcode == model.ShippingZipcode);
 
-                    // TODO: Fix null address adder thing
+                    // TODO: Fix null address thing
                     //if (address == null)
                     //{
                     //    address = new address
@@ -45,7 +45,8 @@ namespace WebStore.Controllers
                     //        Line2 = model.ShippingAddress2,
                     //        City = model.ShippingCity,
                     //        State = model.ShippingState,
-                    //        Zipcode = model.ShippingZipcode
+                    //        Zipcode = model.ShippingZipcode,
+                    //        ShippingMethod = model.ShippingMethod
                     //    };
                     //    entities.Addresses.Add(address);
                     //}
@@ -53,8 +54,6 @@ namespace WebStore.Controllers
 
                     entities.SaveChanges();
                 }
-                
-
                 return RedirectToAction("Index", "Receipt");
             }
             else
