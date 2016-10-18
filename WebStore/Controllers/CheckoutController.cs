@@ -22,18 +22,38 @@ namespace WebStore.Controllers
         {
             if(ModelState.IsValid)
             {
-                //TODO: check to see if address is already in database. if not, add it to the db.
-                //example from Joe: var address = entities.Address.FirstOrDefault(x => x.AddressLine1 == model.ShippingAddress1 && x.AddresLine2 == model.ShippingAddress2....etc...)
-                //if (address == null) 
-                //{
-                //    address = new address
-                //    {
-                //        addressId = entities.Address.Max(x => x.AddressId) + 1,
-                //        addressLine1 = model.ShippingAddress1,
-                //        ...etc...
-                //    };
-                //    entities.Address.Add(Address);
-                //}
+                //TODO: see if checkout works... & add ship method
+                using (WebStoreDatabaseEntities entities = new WebStoreDatabaseEntities())
+                {
+                    int orderNumber = int.Parse(Request.Cookies["OrderNumber"].Value);
+                    var orderHeader = entities.OrderHeaders.Single(x => x.OrderId == orderNumber);
+                    //var shipMethod = entities.OrderHeaders.Single(x => x.ShipMethod);
+                    var address = entities.Addresses.FirstOrDefault(
+                        x => x.Line1 == model.ShippingAddress1 
+                        && x.Line2 == model.ShippingAddress2 
+                        && x.City == model.ShippingCity 
+                        && x.State == model.ShippingState 
+                        && x.Zipcode == model.ShippingZipcode);
+
+                    // TODO: Fix null address adder thing
+                    //if (address == null)
+                    //{
+                    //    address = new address
+                    //    {
+                    //        addressId = entities.Addresses.Max(x => x.AddressId) + 1,
+                    //        Line1 = model.ShippingAddress1,
+                    //        Line2 = model.ShippingAddress2,
+                    //        City = model.ShippingCity,
+                    //        State = model.ShippingState,
+                    //        Zipcode = model.ShippingZipcode
+                    //    };
+                    //    entities.Addresses.Add(address);
+                    //}
+                    //orderHeader.ShipToAddress = address.AddressId;
+
+                    entities.SaveChanges();
+                }
+                
 
                 return RedirectToAction("Index", "Receipt");
             }

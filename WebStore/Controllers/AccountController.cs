@@ -37,7 +37,7 @@ namespace WebStore.Controllers
                 using (WebStoreDatabaseEntities e = new WebStoreDatabaseEntities())
                 {
                     var user = e.Customers.Single(x => x.Email == User.Identity.Name);
-                    //connect model to db
+                    //connects model to db
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
                 }
@@ -64,13 +64,18 @@ namespace WebStore.Controllers
                 }
                 else
                 {
-                    string token = WebMatrix.WebData.WebSecurity.CreateUserAndAccount(model.Email, model.Password, 
+                    string token = WebMatrix.WebData.WebSecurity.CreateUserAndAccount(model.Email, model.Password,
                         new
                         {
                             FirstName = model.FirstName,
                             LastName = model.LastName,
                             Email = model.Email,
-                            Password = model.Password
+                            Password = model.Password,
+                            Line1 = model.BillingAddress1,
+                            Line2 = model.BillingAddress2,
+                            City = model.City,
+                            State = model.State,
+                            Zipcode = model.Zipcode
                         },
                         true);
 

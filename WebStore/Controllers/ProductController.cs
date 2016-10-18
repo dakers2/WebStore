@@ -13,17 +13,25 @@ namespace WebStore.Controllers
         // GET: Product
         public ActionResult Index(int? id)
         {
-            if(id == 1)
+            ProductModel model = new ProductModel();
+            using (WebStoreDatabaseEntities e = new WebStoreDatabaseEntities())
             {
-                return View(new ProductModel {ID = 1 , Name = "Chocolate Chip Cookies", Price = 12.50m, Description = "Made with delicious milk chocolate chips and lots of love. Just like grandma used to make!", Image = "http://placehold.it/350x350"}); //using m turns price into currency
-            }
-            if(id == 2)
-            {
-                return View(new ProductModel { ID = 2, Name = "Peanut Butter Cookies", Price = 10.50m, Description = "Endugle your inner squirrel and stuff your cheeks with these yummy Peanut Butter Cookies." });
+                var product = e.Products.Single(x => x.ProductId == id);
+
+                if(id != null)
+                {
+                    model.Name = product.ProductName;
+                    model.Name = product.Image;
+                    model.Description = product.Description;
+                    model.Price = product.Price??0; //if null, price is 0
+                }
+                else
+                {
+                    new HttpNotFoundResult("Product Not Found");
+                }
             }
 
-            return new HttpNotFoundResult("Product Not Found");
-
+            return View(model);
         }
 
         // POST: Product
@@ -56,9 +64,6 @@ namespace WebStore.Controllers
                 //Saves changes to the database now.
                 e.SaveChanges();
             }
-
-
-
             return RedirectToAction("Index", "Cart"); //determines what happens after you add it to cart
         }
 

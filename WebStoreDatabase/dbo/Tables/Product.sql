@@ -2,7 +2,7 @@
     [ProductId]   INT  IDENTITY(1,1)          NOT NULL,
     [ProductName] NVARCHAR (100) NULL,
     [Description] NVARCHAR (200) NULL,
-    [Price]       MONEY          NULL,
+    [Price]       MONEY          NOT NULL,
     [Image]       NCHAR (100)    NULL,
     [Quantity]    INT            NOT NULL,
     [CategoryId]  INT            NOT NULL,

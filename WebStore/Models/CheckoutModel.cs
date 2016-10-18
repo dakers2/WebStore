@@ -26,6 +26,9 @@ namespace WebStore.Models
         [Required]
         public short Zipcode { get; set; }
 
+        [DisplayName("Shipping Method"), Required]
+        public string ShippingMethod { get; set; }
+
         [DisplayName("Shipping Address"), Required]
         public string ShippingAddress1 { get; set; }
         public string ShippingAddress2 { get; set; }
@@ -37,7 +40,7 @@ namespace WebStore.Models
         public string ShippingState { get; set; }
 
         [DisplayName("Zipcode"), Required]
-        public string ShippingZipcode { get; set; }
+        public int ShippingZipcode { get; set; }
 
         [DisplayName("Credit Card Number"), Required, CreditCard]
         public int CreditCardNumber { get; set; }
