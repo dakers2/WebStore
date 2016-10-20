@@ -22,35 +22,47 @@ namespace WebStore.Controllers
         {
             if(ModelState.IsValid)
             {
-                //TODO: see if checkout works... & add ship method
+                // TODO: see if checkout works... 
+                // TODO: add ship method to checkout page
                 using (WebStoreDatabaseEntities entities = new WebStoreDatabaseEntities())
                 {
                     int orderNumber = int.Parse(Request.Cookies["OrderNumber"].Value);
                     var orderHeader = entities.OrderHeaders.Single(x => x.OrderId == orderNumber);
+
+                    //gives me shipMethodIDs
+                    var shipping = entities.OrderHeaders.Select(x => x.ShipMethod);
+
+                    //turn IDs into actual shipping info
+                    string testship = entities
+
+                    var ShippingList = new List<string>();
+                    foreach (var method in shipping)
+                    {
+                        ShippingList.Add(method);
+                    }
                     var shipMethod = entities.OrderHeaders.Single(x => x.ShipMethod == model.ShippingMethod);
+                    
                     var address = entities.Addresses.FirstOrDefault(
                         x => x.Line1 == model.ShippingAddress1
                         && x.Line2 == model.ShippingAddress2
                         && x.City == model.ShippingCity
                         && x.State == model.ShippingState
                         && x.Zipcode == model.ShippingZipcode);
-
-                    // TODO: Fix null address thing
-                    //if (address == null)
-                    //{
-                    //    address = new address
-                    //    {
-                    //        addressId = entities.Addresses.Max(x => x.AddressId) + 1,
-                    //        Line1 = model.ShippingAddress1,
-                    //        Line2 = model.ShippingAddress2,
-                    //        City = model.ShippingCity,
-                    //        State = model.ShippingState,
-                    //        Zipcode = model.ShippingZipcode,
-                    //        ShippingMethod = model.ShippingMethod
-                    //    };
-                    //    entities.Addresses.Add(address);
-                    //}
-                    //orderHeader.ShipToAddress = address.AddressId;
+                    
+                    if (address == null)
+                    {
+                        address = new Address
+                        {
+                            AddressId = entities.Addresses.Max(x => x.AddressId) + 1,
+                            Line1 = model.ShippingAddress1,
+                            Line2 = model.ShippingAddress2,
+                            City = model.ShippingCity,
+                            State = model.ShippingState,
+                            Zipcode = model.ShippingZipcode,
+                        };
+                        entities.Addresses.Add(address);
+                    }
+                    orderHeader.ShipToAddress = address.AddressId;
 
                     entities.SaveChanges();
                 }

@@ -18,6 +18,14 @@
         <AssociationConnector Association="WebStoreDatabaseModel.FK_OrderHeader_Customer_CustomerId" ManuallyRouted="false" />
         <AssociationConnector Association="WebStoreDatabaseModel.FK_OrderDetail_OrderHeader_OrderId" ManuallyRouted="false" />
         <AssociationConnector Association="WebStoreDatabaseModel.FK_OrderDetail_Product_ProductId" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="WebStoreDatabaseModel.C__RefactorLog" Width="1.5" PointX="7.375" PointY="8.75" />
+        <EntityTypeShape EntityType="WebStoreDatabaseModel.Shipping" Width="1.5" PointX="3" PointY="10" />
+        <EntityTypeShape EntityType="WebStoreDatabaseModel.webpages_Membership" Width="1.5" PointX="9.375" PointY="5.75" />
+        <EntityTypeShape EntityType="WebStoreDatabaseModel.webpages_OAuthMembership" Width="1.5" PointX="9.375" PointY="9.75" />
+        <EntityTypeShape EntityType="WebStoreDatabaseModel.webpages_Roles" Width="1.5" PointX="7.375" PointY="5.875" />
+        <AssociationConnector Association="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId" />
+        <AssociationConnector Association="WebStoreDatabaseModel.webpages_UsersInRoles" />
+        <AssociationConnector Association="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

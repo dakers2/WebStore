@@ -123,6 +123,12 @@
             @Html.TextBoxFor(m => m.ShippingZipcode, new { @class = "form-control " })
             @Html.ValidationMessageFor(m => m.ShippingZipcode)
         </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ShippingMethod)
+            @Html.DropDownList(m => m.ShippingMethod, Model.ShippingMethod.Select(x => new SelectListItem { Text = x, Value = x, Selected = x == Model.ShippingMethod }), new { @class = "form-control" }));
+            @Html.ValidationMessageFor(m => m.ShippingMethod)
+        </div>
     </fieldset>
     <input type="submit" class="btn btn-primary" title="Place Order"/>
 }

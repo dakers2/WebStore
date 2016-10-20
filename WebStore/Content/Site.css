@@ -31,3 +31,18 @@ textarea {
 .btn-login {
     float: right;
 }
+
+.product img {
+    width: 100%;
+}
+
+.product h3 {
+    font-style: italic;
+    margin-top: 2px;
+    margin-bottom: 30px;
+}
+
+.product p {
+    float: right;
+    margin-top: -50px;
+}

@@ -29,6 +29,8 @@ namespace WebStore.Models
         [DisplayName("Shipping Method"), Required]
         public string ShippingMethod { get; set; }
 
+        public List<string> ShippingList { get; set; }
+        
         [DisplayName("Shipping Address"), Required]
         public string ShippingAddress1 { get; set; }
         public string ShippingAddress2 { get; set; }

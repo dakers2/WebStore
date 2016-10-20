@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStore", "WebStore\WebSto
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WebStoreDatabase", "WebStoreDatabase\WebStoreDatabase.sqlproj", "{9C342000-B4BF-458F-911B-BA8246E01469}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "TestProject\UnitTest.csproj", "{55A071C7-C509-4754-95E5-1FB047C7C205}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{9C342000-B4BF-458F-911B-BA8246E01469}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C342000-B4BF-458F-911B-BA8246E01469}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C342000-B4BF-458F-911B-BA8246E01469}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{55A071C7-C509-4754-95E5-1FB047C7C205}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55A071C7-C509-4754-95E5-1FB047C7C205}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55A071C7-C509-4754-95E5-1FB047C7C205}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55A071C7-C509-4754-95E5-1FB047C7C205}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

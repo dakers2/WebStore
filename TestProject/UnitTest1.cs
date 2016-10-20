@@ -1,16 +1,20 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WebStore.Controllers;
 
 namespace TestProject
 {
     [TestClass]
-    public class UnitTest1
+    public class AccountControllerTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void IndexTest()
         {
-            // TODO: Add a few unit tests
+            AccountController controller = new AccountController();
+           // var result = 
 
+
+            // TODO: Add a few more unit tests
         }
     }
 }

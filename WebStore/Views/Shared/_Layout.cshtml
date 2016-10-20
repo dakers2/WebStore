@@ -26,6 +26,7 @@
                     <li>@Html.ActionLink("Product", "Index", "Product", new { id = 1 }, null)</li>
                     @if(User.IsInRole("Administrator"))
                     {
+                        // TODO: fix auth cookie persistance. maybe?
                         <li>@Html.ActionLink("Product Admin", "Index", "ProductAdmin")</li>
                     }
                 </ul>

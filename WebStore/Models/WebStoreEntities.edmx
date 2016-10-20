@@ -4,12 +4,18 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WebStoreDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="WebStoreDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="AddressId" />
           </Key>
-          <Property Name="AddressId" Type="int" Nullable="false" />
+          <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Line1" Type="nchar" MaxLength="50" />
           <Property Name="Line2" Type="nchar" MaxLength="50" />
           <Property Name="City" Type="nchar" MaxLength="50" />
@@ -27,7 +33,7 @@
           <Key>
             <PropertyRef Name="CustomerId" />
           </Key>
-          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="20" />
           <Property Name="LastName" Type="nvarchar" MaxLength="10" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
@@ -37,7 +43,7 @@
           <Key>
             <PropertyRef Name="OrderDetailId" />
           </Key>
-          <Property Name="OrderDetailId" Type="int" Nullable="false" />
+          <Property Name="OrderDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderId" Type="int" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="OrderOty" Type="int" Nullable="false" />
@@ -47,13 +53,13 @@
           <Key>
             <PropertyRef Name="OrderId" />
           </Key>
-          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ShipDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="CustomerId" Type="int" Nullable="false" />
           <Property Name="ShipToAddress" Type="int" Nullable="false" />
           <Property Name="BillToAddress" Type="int" Nullable="false" />
-          <Property Name="ShipMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ShippingMethodId" Type="int" Nullable="false" />
           <Property Name="TotalDue" Type="money" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="SubTotal" Type="money" Nullable="false" />
           <Property Name="TaxAmt" Type="money" Nullable="false" />
@@ -63,14 +69,63 @@
           <Key>
             <PropertyRef Name="ProductId" />
           </Key>
-          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductName" Type="nvarchar" MaxLength="100" />
           <Property Name="Description" Type="nvarchar" MaxLength="200" />
-          <Property Name="Price" Type="money" />
+          <Property Name="Price" Type="money" Nullable="false" />
           <Property Name="Image" Type="nchar" MaxLength="100" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
           <Property Name="Featured" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shipping">
+          <Key>
+            <PropertyRef Name="ShippingMethodId" />
+          </Key>
+          <Property Name="ShippingMethodId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Method" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="DaysToShip" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ConfirmationToken" Type="nvarchar" MaxLength="128" />
+          <Property Name="IsConfirmed" Type="bit" />
+          <Property Name="LastPasswordFailureDate" Type="datetime" />
+          <Property Name="PasswordFailuresSinceLastSuccess" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PasswordChangedDate" Type="datetime" />
+          <Property Name="PasswordSalt" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="PasswordVerificationToken" Type="nvarchar" MaxLength="128" />
+          <Property Name="PasswordVerificationTokenExpirationDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="webpages_OAuthMembership">
+          <Key>
+            <PropertyRef Name="Provider" />
+            <PropertyRef Name="ProviderUserId" />
+          </Key>
+          <Property Name="Provider" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ProviderUserId" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Customer_ToTable">
           <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
@@ -144,6 +199,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrderHeader_ShippingMethodId">
+          <End Role="Shipping" Type="Self.Shipping" Multiplicity="1" />
+          <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipping">
+              <PropertyRef Name="ShippingMethodId" />
+            </Principal>
+            <Dependent Role="OrderHeader">
+              <PropertyRef Name="ShippingMethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Product_ToTable">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -156,13 +223,43 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_RoleId">
+          <End Role="webpages_Roles" Type="Self.webpages_Roles" Multiplicity="1" />
+          <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="webpages_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="webpages_UsersInRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserId">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="webpages_UsersInRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="WebStoreDatabaseModelStoreContainer">
+          <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderHeader" EntityType="Self.OrderHeader" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shipping" EntityType="Self.Shipping" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_Membership" EntityType="Self.webpages_Membership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_OAuthMembership" EntityType="Self.webpages_OAuthMembership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Customer_ToTable" Association="Self.FK_Customer_ToTable">
             <End Role="Address" EntitySet="Address" />
             <End Role="Customer" EntitySet="Customer" />
@@ -187,13 +284,24 @@
             <End Role="Customer" EntitySet="Customer" />
             <End Role="OrderHeader" EntitySet="OrderHeader" />
           </AssociationSet>
+          <AssociationSet Name="FK_OrderHeader_ShippingMethodId" Association="Self.FK_OrderHeader_ShippingMethodId">
+            <End Role="Shipping" EntitySet="Shipping" />
+            <End Role="OrderHeader" EntitySet="OrderHeader" />
+          </AssociationSet>
           <AssociationSet Name="FK_Product_ToTable" Association="Self.FK_Product_ToTable">
             <End Role="Category" EntitySet="Category" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
+          <AssociationSet Name="fk_RoleId" Association="Self.fk_RoleId">
+            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserId" Association="Self.fk_UserId">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WebStoreDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -230,6 +338,7 @@
           <Property Name="AddressId" Type="Int32" />
           <NavigationProperty Name="Address" Relationship="Self.FK_Customer_ToTable" FromRole="Customer" ToRole="Address" />
           <NavigationProperty Name="OrderHeaders" Relationship="Self.FK_OrderHeader_Customer_CustomerId" FromRole="Customer" ToRole="OrderHeader" />
+          <NavigationProperty Name="webpages_Roles" Relationship="WebStoreDatabaseModel.webpages_UsersInRoles" FromRole="Customer" ToRole="webpages_Roles" />
         </EntityType>
         <EntityType Name="OrderDetail">
           <Key>
@@ -253,7 +362,7 @@
           <Property Name="CustomerId" Type="Int32" Nullable="false" />
           <Property Name="ShipToAddress" Type="Int32" Nullable="false" />
           <Property Name="BillToAddress" Type="Int32" Nullable="false" />
-          <Property Name="ShipMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ShipMethod" Type="String" Nullable="false" />
           <Property Name="TotalDue" Type="Decimal" Precision="19" Scale="4" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="SubTotal" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="TaxAmt" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
@@ -262,6 +371,9 @@
           <NavigationProperty Name="Address1" Relationship="Self.FK_OrderHeader_AddressShip_AddressId" FromRole="OrderHeader" ToRole="Address" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_OrderHeader_Customer_CustomerId" FromRole="OrderHeader" ToRole="Customer" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetail_OrderHeader_OrderId" FromRole="OrderHeader" ToRole="OrderDetail" />
+          <NavigationProperty Name="Shipping" Relationship="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId" FromRole="OrderHeader" ToRole="Shipping" />
+          <Property Name="ShippingMethodId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Shipping1" Relationship="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId1" FromRole="OrderHeader" ToRole="Shipping" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -270,7 +382,7 @@
           <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Image" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="CategoryId" Type="Int32" Nullable="false" />
@@ -397,7 +509,102 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="OrderDetail" EntitySet="OrderDetails" />
           </AssociationSet>
+          <EntitySet Name="C__RefactorLog" EntityType="WebStoreDatabaseModel.C__RefactorLog" />
+          <EntitySet Name="Shippings" EntityType="WebStoreDatabaseModel.Shipping" />
+          <EntitySet Name="webpages_Membership" EntityType="WebStoreDatabaseModel.webpages_Membership" />
+          <EntitySet Name="webpages_OAuthMembership" EntityType="WebStoreDatabaseModel.webpages_OAuthMembership" />
+          <EntitySet Name="webpages_Roles" EntityType="WebStoreDatabaseModel.webpages_Roles" />
+          <AssociationSet Name="FK_OrderHeader_ShippingMethodId" Association="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId">
+            <End Role="Shipping" EntitySet="Shippings" />
+            <End Role="OrderHeader" EntitySet="OrderHeaders" />
+          </AssociationSet>
+          <AssociationSet Name="webpages_UsersInRoles" Association="WebStoreDatabaseModel.webpages_UsersInRoles">
+            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderHeader_ShippingMethodId1" Association="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId1">
+            <End Role="Shipping" EntitySet="Shippings" />
+            <End Role="OrderHeader" EntitySet="OrderHeaders" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="C__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shipping">
+          <Key>
+            <PropertyRef Name="ShippingMethodId" />
+          </Key>
+          <Property Name="ShippingMethodId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Method" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DaysToShip" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrderHeaders" Relationship="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId" FromRole="Shipping" ToRole="OrderHeader" />
+          <NavigationProperty Name="OrderHeaders1" Relationship="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId1" FromRole="Shipping" ToRole="OrderHeader" />
+        </EntityType>
+        <EntityType Name="webpages_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ConfirmationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IsConfirmed" Type="Boolean" />
+          <Property Name="LastPasswordFailureDate" Type="DateTime" Precision="3" />
+          <Property Name="PasswordFailuresSinceLastSuccess" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordChangedDate" Type="DateTime" Precision="3" />
+          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordVerificationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordVerificationTokenExpirationDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="webpages_OAuthMembership">
+          <Key>
+            <PropertyRef Name="Provider" />
+            <PropertyRef Name="ProviderUserId" />
+          </Key>
+          <Property Name="Provider" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderUserId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customers" Relationship="WebStoreDatabaseModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="Customer" />
+        </EntityType>
+        <Association Name="FK_OrderHeader_ShippingMethodId">
+          <End Type="WebStoreDatabaseModel.Shipping" Role="Shipping" Multiplicity="1" />
+          <End Type="WebStoreDatabaseModel.OrderHeader" Role="OrderHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipping">
+              <PropertyRef Name="ShippingMethodId" />
+            </Principal>
+            <Dependent Role="OrderHeader">
+              <PropertyRef Name="ShipMethod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="webpages_UsersInRoles">
+          <End Type="WebStoreDatabaseModel.webpages_Roles" Role="webpages_Roles" Multiplicity="*" />
+          <End Type="WebStoreDatabaseModel.Customer" Role="Customer" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_OrderHeader_ShippingMethodId1">
+          <End Type="WebStoreDatabaseModel.Shipping" Role="Shipping" Multiplicity="1" />
+          <End Type="WebStoreDatabaseModel.OrderHeader" Role="OrderHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipping">
+              <PropertyRef Name="ShippingMethodId" />
+            </Principal>
+            <Dependent Role="OrderHeader">
+              <PropertyRef Name="ShippingMethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -449,13 +656,13 @@
           <EntitySetMapping Name="OrderHeaders">
             <EntityTypeMapping TypeName="WebStoreDatabaseModel.OrderHeader">
               <MappingFragment StoreEntitySet="OrderHeader">
+                <ScalarProperty Name="ShippingMethodId" ColumnName="ShippingMethodId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
                 <ScalarProperty Name="ShipDate" ColumnName="ShipDate" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="ShipToAddress" ColumnName="ShipToAddress" />
                 <ScalarProperty Name="BillToAddress" ColumnName="BillToAddress" />
-                <ScalarProperty Name="ShipMethod" ColumnName="ShipMethod" />
                 <ScalarProperty Name="TotalDue" ColumnName="TotalDue" />
                 <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
                 <ScalarProperty Name="TaxAmt" ColumnName="TaxAmt" />
@@ -477,6 +684,65 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="C__RefactorLog">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.C__RefactorLog">
+              <MappingFragment StoreEntitySet="__RefactorLog">
+                <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shippings">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.Shipping">
+              <MappingFragment StoreEntitySet="Shipping">
+                <ScalarProperty Name="DaysToShip" ColumnName="DaysToShip" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="ShippingMethodId" ColumnName="ShippingMethodId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Membership">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.webpages_Membership">
+              <MappingFragment StoreEntitySet="webpages_Membership">
+                <ScalarProperty Name="PasswordVerificationTokenExpirationDate" ColumnName="PasswordVerificationTokenExpirationDate" />
+                <ScalarProperty Name="PasswordVerificationToken" ColumnName="PasswordVerificationToken" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="PasswordChangedDate" ColumnName="PasswordChangedDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PasswordFailuresSinceLastSuccess" ColumnName="PasswordFailuresSinceLastSuccess" />
+                <ScalarProperty Name="LastPasswordFailureDate" ColumnName="LastPasswordFailureDate" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="ConfirmationToken" ColumnName="ConfirmationToken" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_OAuthMembership">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.webpages_OAuthMembership">
+              <MappingFragment StoreEntitySet="webpages_OAuthMembership">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
+                <ScalarProperty Name="Provider" ColumnName="Provider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Roles">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.webpages_Roles">
+              <MappingFragment StoreEntitySet="webpages_Roles">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="webpages_UsersInRoles" TypeName="WebStoreDatabaseModel.webpages_UsersInRoles" StoreEntitySet="webpages_UsersInRoles">
+            <EndProperty Name="Customer">
+              <ScalarProperty Name="CustomerId" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="webpages_Roles">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

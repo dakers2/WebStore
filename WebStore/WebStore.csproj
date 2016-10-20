@@ -161,26 +161,8 @@
     </Compile>
     <Compile Include="LogAttribute.cs" />
     <Compile Include="Models\AccountDetailsModel.cs" />
-    <Compile Include="Models\Address.cs">
-      <DependentUpon>WebStoreEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Category.cs">
-      <DependentUpon>WebStoreEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\CheckoutModel.cs" />
-    <Compile Include="Models\Customer.cs">
-      <DependentUpon>WebStoreEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\OrderDetail.cs">
-      <DependentUpon>WebStoreEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\OrderHeader.cs">
-      <DependentUpon>WebStoreEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Product.cs">
-      <DependentUpon>WebStoreEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Models\WebStoreEntities.Context.cs">

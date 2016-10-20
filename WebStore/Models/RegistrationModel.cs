@@ -12,7 +12,6 @@ namespace WebStore.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        [MinLength(7)]
         public string Password { get; set; }
 
         [DisplayName("First Name"), Required]
@@ -27,7 +26,7 @@ namespace WebStore.Models
         public string City { get; set; }
         [Required]
         public string State { get; set; }
-        [Required]
-        public short Zipcode { get; set; }
+        [MinLength(7), MaxLength(7), Required]
+        public int Zipcode { get; set; }
     }
 }

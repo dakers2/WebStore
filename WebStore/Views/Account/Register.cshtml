@@ -33,7 +33,36 @@
         @Html.ValidationMessageFor(m => m.LastName)
     </div>
 
-    <input type="submit" value="Create Account" class="btn btn-primary" />
+    <div class="form-group">
+        @Html.LabelFor(m => m.BillingAddress1)
+        @Html.TextBoxFor(m => m.BillingAddress1, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.BillingAddress1)
+    </div>
 
+    <div class="form-group">
+        @Html.LabelFor(m => m.BillingAddress2)
+        @Html.TextBoxFor(m => m.BillingAddress2, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.BillingAddress2)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.City)
+        @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.City)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.State)
+        @Html.TextBoxFor(m => m.State, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.State)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Zipcode)
+        @Html.TextBoxFor(m => m.Zipcode, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Zipcode)
+    </div>
+
+    <input type="submit" value="Create Account" class="btn btn-primary" />
 }
 

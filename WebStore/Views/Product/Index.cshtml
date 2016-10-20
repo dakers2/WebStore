@@ -21,7 +21,7 @@
                 <fieldset>
                     <div class="form-group">
                     @Html.LabelFor(m => m.Quantity)
-                    @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control"})
+                    @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", value = 1} // TODO: check if value can be used this way) 
                     </div>
                 </fieldset>
                 <input type="submit" class="btn btn-primary" title="Add To Cart"/>

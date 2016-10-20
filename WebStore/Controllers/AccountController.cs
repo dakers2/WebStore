@@ -169,10 +169,13 @@ namespace WebStore.Controllers
             {
                 if (WebMatrix.WebData.WebSecurity.Login(model.Email, model.Password, true))
                 {
-                    // TODO: give user auth cookie so it can be used on cart page
-                    //pulls their data from the DB based on their customerId
+                    //gets CustID based on email and issues persistant auth cookie
+                    using (WebStoreDatabaseEntities e = new WebStoreDatabaseEntities())
+                    {
+                        var user = e.Customers.Single(x => x.Email == model.Email);
+                        FormsAuthentication.SetAuthCookie(user.CustomerId.ToString(), true);
+                    }
                 }
-                // TODO: Be sure error shows up if username/pass is incorrect
                 return RedirectToAction("Index", "Home");
             }
             return View(model);

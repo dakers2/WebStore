@@ -30,7 +30,6 @@ namespace WebStore.Controllers
                     new HttpNotFoundResult("Product Not Found");
                 }
             }
-
             return View(model);
         }
 
@@ -64,7 +63,7 @@ namespace WebStore.Controllers
                 //Saves changes to the database now.
                 e.SaveChanges();
             }
-            return RedirectToAction("Index", "Cart"); //determines what happens after you add it to cart
+            return RedirectToAction("Index", "Cart"); //determines what happens after clicking "add it to cart"
         }
 
     }
