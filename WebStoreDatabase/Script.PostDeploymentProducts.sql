@@ -10,6 +10,11 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
+INSERT INTO Category (CategoryId, Category)
+VALUES (1, 'Cake'),
+(2, 'Cupcake'),
+(3, 'Cookie')
+
 INSERT INTO Product (Featured, Quantity, ProductName, Price, Description, Image, CategoryId)
 VALUES 
 	(0, 100, 'Cheese Cake',	13.99, 'Usu et nostrum percipitur, ludus doming recteque ex vel. Quidam ceteros ex nec, cu quot aeterno bonorum vel. Veritus platonem.', '/Images/cake-cheese.jpg', 	2),
@@ -36,5 +41,5 @@ VALUES
 	(0, 700, 'Tarts',	5.99, 'Purto eruditi cu mei, eu per option eloquentiam. No habeo probatus his, facer mucius at.', '/Images/dessert-tart.jpg', 3),
 	(0, 450, 'Sugar Jellies', 3.50, 'Pro te maluisset patrioque, sea quot moderatius no, per prima aliquam impedit te. Ei mei harum ponderum, sed eu odio.', '/Images/jelly.jpg', 3)
 
-INSERT INTO Shipping (Method, Price, DaysToShip)
-VALUES ('Standard',7.99,7), ('Express', 12.99, 3), ('Next Day', 15.99, 1)
+INSERT INTO Shipping (ShippingMethodId, Method, Price, DaysToShip)
+VALUES (1, 'Standard',7.99,7), (2, 'Express', 12.99, 3), (3, 'Next Day', 15.99, 1)

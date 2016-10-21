@@ -23,6 +23,10 @@ textarea {
     max-width: 280px;
 }
 
+.navbar-brand {
+    font-family: 'Pacifico', cursive, sans-serif;
+}
+
 .home-image {
     border-radius: 6px;
     width: 350px;
@@ -46,3 +50,11 @@ textarea {
     float: right;
     margin-top: -50px;
 }
+
+
+/*
+
+font-family: 'Open Sans', sans-serif;
+font-family: 'Pacifico', cursive;
+
+*/

@@ -5,7 +5,7 @@
     [CustomerId]    INT           NOT NULL,
     [ShipToAddress] INT           NOT NULL,
     [BillToAddress] INT           NOT NULL,
-    [ShippingMethodId]    INT NOT NULL,
+    [ShippingMethodId] INT NOT NULL,
     [TotalDue]      AS            (isnull(([SubTotal]+[TaxAmt])+[ShipAmt],(0))),
     [SubTotal]      MONEY         NOT NULL,
     [TaxAmt]        MONEY         NOT NULL,

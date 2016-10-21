@@ -82,7 +82,7 @@
           <Key>
             <PropertyRef Name="ShippingMethodId" />
           </Key>
-          <Property Name="ShippingMethodId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ShippingMethodId" Type="int" Nullable="false" />
           <Property Name="Method" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="Price" Type="money" Nullable="false" />
           <Property Name="DaysToShip" Type="int" Nullable="false" />
@@ -305,224 +305,51 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WebStoreDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Address">
-          <Key>
-            <PropertyRef Name="AddressId" />
-          </Key>
-          <Property Name="AddressId" Type="Int32" Nullable="false" />
-          <Property Name="Line1" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="Line2" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="City" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="Zipcode" Type="Int32" />
-          <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_ToTable" FromRole="Address" ToRole="Customer" />
-          <NavigationProperty Name="OrderHeaders" Relationship="Self.FK_OrderHeader_AddressBill_AddressId" FromRole="Address" ToRole="OrderHeader" />
-          <NavigationProperty Name="OrderHeaders1" Relationship="Self.FK_OrderHeader_AddressShip_AddressId" FromRole="Address" ToRole="OrderHeader" />
-        </EntityType>
-        <EntityType Name="Category">
-          <Key>
-            <PropertyRef Name="CategoryId" />
-          </Key>
-          <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <Property Name="Category1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Product_ToTable" FromRole="Category" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="Customer">
-          <Key>
-            <PropertyRef Name="CustomerId" />
-          </Key>
-          <Property Name="CustomerId" Type="Int32" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AddressId" Type="Int32" />
-          <NavigationProperty Name="Address" Relationship="Self.FK_Customer_ToTable" FromRole="Customer" ToRole="Address" />
-          <NavigationProperty Name="OrderHeaders" Relationship="Self.FK_OrderHeader_Customer_CustomerId" FromRole="Customer" ToRole="OrderHeader" />
-          <NavigationProperty Name="webpages_Roles" Relationship="WebStoreDatabaseModel.webpages_UsersInRoles" FromRole="Customer" ToRole="webpages_Roles" />
-        </EntityType>
-        <EntityType Name="OrderDetail">
-          <Key>
-            <PropertyRef Name="OrderDetailId" />
-          </Key>
-          <Property Name="OrderDetailId" Type="Int32" Nullable="false" />
-          <Property Name="OrderId" Type="Int32" Nullable="false" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="OrderOty" Type="Int32" Nullable="false" />
-          <Property Name="LineTotal" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="OrderHeader" Relationship="Self.FK_OrderDetail_OrderHeader_OrderId" FromRole="OrderDetail" ToRole="OrderHeader" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_OrderDetail_Product_ProductId" FromRole="OrderDetail" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="OrderHeader">
-          <Key>
-            <PropertyRef Name="OrderId" />
-          </Key>
-          <Property Name="OrderId" Type="Int32" Nullable="false" />
-          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="ShipDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="CustomerId" Type="Int32" Nullable="false" />
-          <Property Name="ShipToAddress" Type="Int32" Nullable="false" />
-          <Property Name="BillToAddress" Type="Int32" Nullable="false" />
-          <Property Name="ShipMethod" Type="String" Nullable="false" />
-          <Property Name="TotalDue" Type="Decimal" Precision="19" Scale="4" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="SubTotal" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="TaxAmt" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="ShipAmt" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <NavigationProperty Name="Address" Relationship="Self.FK_OrderHeader_AddressBill_AddressId" FromRole="OrderHeader" ToRole="Address" />
-          <NavigationProperty Name="Address1" Relationship="Self.FK_OrderHeader_AddressShip_AddressId" FromRole="OrderHeader" ToRole="Address" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_OrderHeader_Customer_CustomerId" FromRole="OrderHeader" ToRole="Customer" />
-          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetail_OrderHeader_OrderId" FromRole="OrderHeader" ToRole="OrderDetail" />
-          <NavigationProperty Name="Shipping" Relationship="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId" FromRole="OrderHeader" ToRole="Shipping" />
-          <Property Name="ShippingMethodId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Shipping1" Relationship="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId1" FromRole="OrderHeader" ToRole="Shipping" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="ProductId" />
-          </Key>
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Image" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <Property Name="Featured" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Category" Relationship="Self.FK_Product_ToTable" FromRole="Product" ToRole="Category" />
-          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetail_Product_ProductId" FromRole="Product" ToRole="OrderDetail" />
-        </EntityType>
-        <Association Name="FK_Customer_ToTable">
-          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
-          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Address">
-              <PropertyRef Name="AddressId" />
-            </Principal>
-            <Dependent Role="Customer">
-              <PropertyRef Name="AddressId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderHeader_AddressBill_AddressId">
-          <End Role="Address" Type="Self.Address" Multiplicity="1" />
-          <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Address">
-              <PropertyRef Name="AddressId" />
-            </Principal>
-            <Dependent Role="OrderHeader">
-              <PropertyRef Name="BillToAddress" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderHeader_AddressShip_AddressId">
-          <End Role="Address" Type="Self.Address" Multiplicity="1" />
-          <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Address">
-              <PropertyRef Name="AddressId" />
-            </Principal>
-            <Dependent Role="OrderHeader">
-              <PropertyRef Name="ShipToAddress" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Product_ToTable">
-          <End Role="Category" Type="Self.Category" Multiplicity="1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="CategoryId" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderHeader_Customer_CustomerId">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="OrderHeader">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetail_OrderHeader_OrderId">
-          <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="1" />
-          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OrderHeader">
-              <PropertyRef Name="OrderId" />
-            </Principal>
-            <Dependent Role="OrderDetail">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderDetail_Product_ProductId">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
-          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ProductId" />
-            </Principal>
-            <Dependent Role="OrderDetail">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="WebStoreDatabaseEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Addresses" EntityType="Self.Address" />
-          <EntitySet Name="Categories" EntityType="Self.Category" />
-          <EntitySet Name="Customers" EntityType="Self.Customer" />
-          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
-          <EntitySet Name="OrderHeaders" EntityType="Self.OrderHeader" />
-          <EntitySet Name="Products" EntityType="Self.Product" />
-          <AssociationSet Name="FK_Customer_ToTable" Association="Self.FK_Customer_ToTable">
-            <End Role="Address" EntitySet="Addresses" />
-            <End Role="Customer" EntitySet="Customers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderHeader_AddressBill_AddressId" Association="Self.FK_OrderHeader_AddressBill_AddressId">
-            <End Role="Address" EntitySet="Addresses" />
-            <End Role="OrderHeader" EntitySet="OrderHeaders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderHeader_AddressShip_AddressId" Association="Self.FK_OrderHeader_AddressShip_AddressId">
-            <End Role="Address" EntitySet="Addresses" />
-            <End Role="OrderHeader" EntitySet="OrderHeaders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Product_ToTable" Association="Self.FK_Product_ToTable">
-            <End Role="Category" EntitySet="Categories" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderHeader_Customer_CustomerId" Association="Self.FK_OrderHeader_Customer_CustomerId">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="OrderHeader" EntitySet="OrderHeaders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetail_OrderHeader_OrderId" Association="Self.FK_OrderDetail_OrderHeader_OrderId">
-            <End Role="OrderHeader" EntitySet="OrderHeaders" />
-            <End Role="OrderDetail" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderDetail_Product_ProductId" Association="Self.FK_OrderDetail_Product_ProductId">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="OrderDetail" EntitySet="OrderDetails" />
-          </AssociationSet>
           <EntitySet Name="C__RefactorLog" EntityType="WebStoreDatabaseModel.C__RefactorLog" />
-          <EntitySet Name="Shippings" EntityType="WebStoreDatabaseModel.Shipping" />
+          <EntitySet Name="Addresses" EntityType="WebStoreDatabaseModel.Address" />
+          <EntitySet Name="Categories" EntityType="WebStoreDatabaseModel.Category" />
+          <EntitySet Name="Customers" EntityType="WebStoreDatabaseModel.Customer" />
+          <EntitySet Name="OrderDetails" EntityType="WebStoreDatabaseModel.OrderDetail" />
+          <EntitySet Name="Products" EntityType="WebStoreDatabaseModel.Product" />
           <EntitySet Name="webpages_Membership" EntityType="WebStoreDatabaseModel.webpages_Membership" />
           <EntitySet Name="webpages_OAuthMembership" EntityType="WebStoreDatabaseModel.webpages_OAuthMembership" />
           <EntitySet Name="webpages_Roles" EntityType="WebStoreDatabaseModel.webpages_Roles" />
-          <AssociationSet Name="FK_OrderHeader_ShippingMethodId" Association="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId">
-            <End Role="Shipping" EntitySet="Shippings" />
-            <End Role="OrderHeader" EntitySet="OrderHeaders" />
+          <AssociationSet Name="FK_Customer_ToTable" Association="WebStoreDatabaseModel.FK_Customer_ToTable">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ToTable" Association="WebStoreDatabaseModel.FK_Product_ToTable">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Product_ProductId" Association="WebStoreDatabaseModel.FK_OrderDetail_Product_ProductId">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
           </AssociationSet>
           <AssociationSet Name="webpages_UsersInRoles" Association="WebStoreDatabaseModel.webpages_UsersInRoles">
             <End Role="webpages_Roles" EntitySet="webpages_Roles" />
             <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
-          <AssociationSet Name="FK_OrderHeader_ShippingMethodId1" Association="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId1">
+          <EntitySet Name="OrderHeaders" EntityType="WebStoreDatabaseModel.OrderHeader" />
+          <EntitySet Name="Shippings" EntityType="WebStoreDatabaseModel.Shipping" />
+          <AssociationSet Name="FK_OrderHeader_AddressBill_AddressId" Association="WebStoreDatabaseModel.FK_OrderHeader_AddressBill_AddressId">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="OrderHeader" EntitySet="OrderHeaders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderHeader_AddressShip_AddressId" Association="WebStoreDatabaseModel.FK_OrderHeader_AddressShip_AddressId">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="OrderHeader" EntitySet="OrderHeaders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderHeader_Customer_CustomerId" Association="WebStoreDatabaseModel.FK_OrderHeader_Customer_CustomerId">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="OrderHeader" EntitySet="OrderHeaders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_OrderHeader_OrderId" Association="WebStoreDatabaseModel.FK_OrderDetail_OrderHeader_OrderId">
+            <End Role="OrderHeader" EntitySet="OrderHeaders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderHeader_ShippingMethodId" Association="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId">
             <End Role="Shipping" EntitySet="Shippings" />
             <End Role="OrderHeader" EntitySet="OrderHeaders" />
           </AssociationSet>
@@ -533,16 +360,67 @@
           </Key>
           <Property Name="OperationKey" Type="Guid" Nullable="false" />
         </EntityType>
-        <EntityType Name="Shipping">
+        <EntityType Name="Address">
           <Key>
-            <PropertyRef Name="ShippingMethodId" />
+            <PropertyRef Name="AddressId" />
           </Key>
-          <Property Name="ShippingMethodId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Method" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Line1" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Line2" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Zipcode" Type="Int32" />
+          <NavigationProperty Name="Customers" Relationship="WebStoreDatabaseModel.FK_Customer_ToTable" FromRole="Address" ToRole="Customer" />
+          <NavigationProperty Name="OrderHeaders" Relationship="WebStoreDatabaseModel.FK_OrderHeader_AddressBill_AddressId" FromRole="Address" ToRole="OrderHeader" />
+          <NavigationProperty Name="OrderHeaders1" Relationship="WebStoreDatabaseModel.FK_OrderHeader_AddressShip_AddressId" FromRole="Address" ToRole="OrderHeader" />
+          </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Category1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="WebStoreDatabaseModel.FK_Product_ToTable" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressId" Type="Int32" />
+          <NavigationProperty Name="Address" Relationship="WebStoreDatabaseModel.FK_Customer_ToTable" FromRole="Customer" ToRole="Address" />
+          <NavigationProperty Name="webpages_Roles" Relationship="WebStoreDatabaseModel.webpages_UsersInRoles" FromRole="Customer" ToRole="webpages_Roles" />
+          <NavigationProperty Name="OrderHeaders" Relationship="WebStoreDatabaseModel.FK_OrderHeader_Customer_CustomerId" FromRole="Customer" ToRole="OrderHeader" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="OrderDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="OrderOty" Type="Int32" Nullable="false" />
+          <Property Name="LineTotal" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Product" Relationship="WebStoreDatabaseModel.FK_OrderDetail_Product_ProductId" FromRole="OrderDetail" ToRole="Product" />
+          <NavigationProperty Name="OrderHeader" Relationship="WebStoreDatabaseModel.FK_OrderDetail_OrderHeader_OrderId" FromRole="OrderDetail" ToRole="OrderHeader" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="DaysToShip" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="OrderHeaders" Relationship="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId" FromRole="Shipping" ToRole="OrderHeader" />
-          <NavigationProperty Name="OrderHeaders1" Relationship="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId1" FromRole="Shipping" ToRole="OrderHeader" />
+          <Property Name="Image" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Featured" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="WebStoreDatabaseModel.FK_Product_ToTable" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="OrderDetails" Relationship="WebStoreDatabaseModel.FK_OrderDetail_Product_ProductId" FromRole="Product" ToRole="OrderDetail" />
         </EntityType>
         <EntityType Name="webpages_Membership">
           <Key>
@@ -577,6 +455,125 @@
           <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Customers" Relationship="WebStoreDatabaseModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="Customer" />
         </EntityType>
+        <Association Name="FK_Customer_ToTable">
+          <End Type="WebStoreDatabaseModel.Address" Role="Address" Multiplicity="0..1" />
+          <End Type="WebStoreDatabaseModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="AddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ToTable">
+          <End Type="WebStoreDatabaseModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="WebStoreDatabaseModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Product_ProductId">
+          <End Type="WebStoreDatabaseModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="WebStoreDatabaseModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="webpages_UsersInRoles">
+          <End Type="WebStoreDatabaseModel.webpages_Roles" Role="webpages_Roles" Multiplicity="*" />
+          <End Type="WebStoreDatabaseModel.Customer" Role="Customer" Multiplicity="*" />
+        </Association>
+        <EntityType Name="OrderHeader">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ShipDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="ShipToAddress" Type="Int32" Nullable="false" />
+          <Property Name="BillToAddress" Type="Int32" Nullable="false" />
+          <Property Name="ShippingMethodId" Type="Int32" Nullable="false" />
+          <Property Name="TotalDue" Type="Decimal" Nullable="false" Precision="19" Scale="4" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="SubTotal" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="TaxAmt" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ShipAmt" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Address" Relationship="WebStoreDatabaseModel.FK_OrderHeader_AddressBill_AddressId" FromRole="OrderHeader" ToRole="Address" />
+          <NavigationProperty Name="Address1" Relationship="WebStoreDatabaseModel.FK_OrderHeader_AddressShip_AddressId" FromRole="OrderHeader" ToRole="Address" />
+          <NavigationProperty Name="Customer" Relationship="WebStoreDatabaseModel.FK_OrderHeader_Customer_CustomerId" FromRole="OrderHeader" ToRole="Customer" />
+          <NavigationProperty Name="OrderDetails" Relationship="WebStoreDatabaseModel.FK_OrderDetail_OrderHeader_OrderId" FromRole="OrderHeader" ToRole="OrderDetail" />
+          <NavigationProperty Name="Shipping" Relationship="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId" FromRole="OrderHeader" ToRole="Shipping" />
+        </EntityType>
+        <EntityType Name="Shipping">
+          <Key>
+            <PropertyRef Name="ShippingMethodId" />
+          </Key>
+          <Property Name="ShippingMethodId" Type="Int32" Nullable="false" />
+          <Property Name="Method" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DaysToShip" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrderHeaders" Relationship="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId" FromRole="Shipping" ToRole="OrderHeader" />
+        </EntityType>
+        <Association Name="FK_OrderHeader_AddressBill_AddressId">
+          <End Type="WebStoreDatabaseModel.Address" Role="Address" Multiplicity="1" />
+          <End Type="WebStoreDatabaseModel.OrderHeader" Role="OrderHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="OrderHeader">
+              <PropertyRef Name="BillToAddress" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderHeader_AddressShip_AddressId">
+          <End Type="WebStoreDatabaseModel.Address" Role="Address" Multiplicity="1" />
+          <End Type="WebStoreDatabaseModel.OrderHeader" Role="OrderHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="AddressId" />
+            </Principal>
+            <Dependent Role="OrderHeader">
+              <PropertyRef Name="ShipToAddress" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderHeader_Customer_CustomerId">
+          <End Type="WebStoreDatabaseModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="WebStoreDatabaseModel.OrderHeader" Role="OrderHeader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="OrderHeader">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_OrderHeader_OrderId">
+          <End Type="WebStoreDatabaseModel.OrderHeader" Role="OrderHeader" Multiplicity="1" />
+          <End Type="WebStoreDatabaseModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderHeader">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrderHeader_ShippingMethodId">
           <End Type="WebStoreDatabaseModel.Shipping" Role="Shipping" Multiplicity="1" />
           <End Type="WebStoreDatabaseModel.OrderHeader" Role="OrderHeader" Multiplicity="*" />
@@ -585,105 +582,16 @@
               <PropertyRef Name="ShippingMethodId" />
             </Principal>
             <Dependent Role="OrderHeader">
-              <PropertyRef Name="ShipMethod" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="webpages_UsersInRoles">
-          <End Type="WebStoreDatabaseModel.webpages_Roles" Role="webpages_Roles" Multiplicity="*" />
-          <End Type="WebStoreDatabaseModel.Customer" Role="Customer" Multiplicity="*" />
-        </Association>
-        <Association Name="FK_OrderHeader_ShippingMethodId1">
-          <End Type="WebStoreDatabaseModel.Shipping" Role="Shipping" Multiplicity="1" />
-          <End Type="WebStoreDatabaseModel.OrderHeader" Role="OrderHeader" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Shipping">
-              <PropertyRef Name="ShippingMethodId" />
-            </Principal>
-            <Dependent Role="OrderHeader">
               <PropertyRef Name="ShippingMethodId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="WebStoreDatabaseModelStoreContainer" CdmEntityContainer="WebStoreDatabaseEntities">
-          <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="WebStoreDatabaseModel.Address">
-              <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-                <ScalarProperty Name="Line1" ColumnName="Line1" />
-                <ScalarProperty Name="Line2" ColumnName="Line2" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="WebStoreDatabaseModel.Category">
-              <MappingFragment StoreEntitySet="Category">
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="Category1" ColumnName="Category" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="WebStoreDatabaseModel.Customer">
-              <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderDetails">
-            <EntityTypeMapping TypeName="WebStoreDatabaseModel.OrderDetail">
-              <MappingFragment StoreEntitySet="OrderDetail">
-                <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="OrderOty" ColumnName="OrderOty" />
-                <ScalarProperty Name="LineTotal" ColumnName="LineTotal" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderHeaders">
-            <EntityTypeMapping TypeName="WebStoreDatabaseModel.OrderHeader">
-              <MappingFragment StoreEntitySet="OrderHeader">
-                <ScalarProperty Name="ShippingMethodId" ColumnName="ShippingMethodId" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-                <ScalarProperty Name="ShipDate" ColumnName="ShipDate" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="ShipToAddress" ColumnName="ShipToAddress" />
-                <ScalarProperty Name="BillToAddress" ColumnName="BillToAddress" />
-                <ScalarProperty Name="TotalDue" ColumnName="TotalDue" />
-                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
-                <ScalarProperty Name="TaxAmt" ColumnName="TaxAmt" />
-                <ScalarProperty Name="ShipAmt" ColumnName="ShipAmt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="WebStoreDatabaseModel.Product">
-              <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="Featured" ColumnName="Featured" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="C__RefactorLog">
             <EntityTypeMapping TypeName="WebStoreDatabaseModel.C__RefactorLog">
               <MappingFragment StoreEntitySet="__RefactorLog">
@@ -691,13 +599,59 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Shippings">
-            <EntityTypeMapping TypeName="WebStoreDatabaseModel.Shipping">
-              <MappingFragment StoreEntitySet="Shipping">
-                <ScalarProperty Name="DaysToShip" ColumnName="DaysToShip" />
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Line2" ColumnName="Line2" />
+                <ScalarProperty Name="Line1" ColumnName="Line1" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Category1" ColumnName="Category" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="LineTotal" ColumnName="LineTotal" />
+                <ScalarProperty Name="OrderOty" ColumnName="OrderOty" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Featured" ColumnName="Featured" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Method" ColumnName="Method" />
-                <ScalarProperty Name="ShippingMethodId" ColumnName="ShippingMethodId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -743,6 +697,33 @@
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="OrderHeaders">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.OrderHeader">
+              <MappingFragment StoreEntitySet="OrderHeader">
+                <ScalarProperty Name="ShipAmt" ColumnName="ShipAmt" />
+                <ScalarProperty Name="TaxAmt" ColumnName="TaxAmt" />
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+                <ScalarProperty Name="TotalDue" ColumnName="TotalDue" />
+                <ScalarProperty Name="ShippingMethodId" ColumnName="ShippingMethodId" />
+                <ScalarProperty Name="BillToAddress" ColumnName="BillToAddress" />
+                <ScalarProperty Name="ShipToAddress" ColumnName="ShipToAddress" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ShipDate" ColumnName="ShipDate" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shippings">
+            <EntityTypeMapping TypeName="WebStoreDatabaseModel.Shipping">
+              <MappingFragment StoreEntitySet="Shipping">
+                <ScalarProperty Name="DaysToShip" ColumnName="DaysToShip" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="ShippingMethodId" ColumnName="ShippingMethodId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

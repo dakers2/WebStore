@@ -5,7 +5,7 @@
     [Email]      NVARCHAR (50) NULL,
     [AddressId]  INT           NULL,
     CONSTRAINT [PK_Customer] PRIMARY KEY ([CustomerId] ASC),
-    CONSTRAINT [FK_Customer_ToTable] FOREIGN KEY ([AddressId]) REFERENCES [dbo].[Address] ([AddressId])
+    CONSTRAINT [FK_Customer_AddressId] FOREIGN KEY ([AddressId]) REFERENCES [dbo].[Address] ([AddressId])
 );
 
 
