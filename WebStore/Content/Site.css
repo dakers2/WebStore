@@ -29,7 +29,7 @@ textarea {
 
 .home-image {
     border-radius: 6px;
-    width: 350px;
+    width: 100%;
 }
 
 .btn-login {

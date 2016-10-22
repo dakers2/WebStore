@@ -9,23 +9,23 @@
         <EntityTypeShape EntityType="WebStoreDatabaseModel.Address" Width="1.5" PointX="0.75" PointY="3.125" />
         <EntityTypeShape EntityType="WebStoreDatabaseModel.Category" Width="1.5" PointX="3" PointY="12.75" />
         <EntityTypeShape EntityType="WebStoreDatabaseModel.Customer" Width="1.5" PointX="3" PointY="3.25" />
-        <EntityTypeShape EntityType="WebStoreDatabaseModel.OrderDetail" Width="1.5" PointX="7.5" PointY="3.375" />
         <EntityTypeShape EntityType="WebStoreDatabaseModel.Product" Width="1.5" PointX="5.25" PointY="12.125" />
         <EntityTypeShape EntityType="WebStoreDatabaseModel.webpages_Membership" Width="1.5" PointX="7.75" PointY="7.25" />
         <EntityTypeShape EntityType="WebStoreDatabaseModel.webpages_OAuthMembership" Width="1.5" PointX="9.75" PointY="2.25" />
         <EntityTypeShape EntityType="WebStoreDatabaseModel.webpages_Roles" Width="1.5" PointX="0.75" PointY="0.75" />
         <AssociationConnector Association="WebStoreDatabaseModel.FK_Customer_ToTable" />
         <AssociationConnector Association="WebStoreDatabaseModel.FK_Product_ToTable" />
-        <AssociationConnector Association="WebStoreDatabaseModel.FK_OrderDetail_Product_ProductId" />
         <AssociationConnector Association="WebStoreDatabaseModel.webpages_UsersInRoles" />
-        <EntityTypeShape EntityType="WebStoreDatabaseModel.OrderHeader" Width="1.5" PointX="5.25" PointY="2.75" />
         <EntityTypeShape EntityType="WebStoreDatabaseModel.Shipping" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="WebStoreDatabaseModel.OrderHeader" Width="1.5" PointX="5.25" PointY="1.25" />
         <AssociationConnector Association="WebStoreDatabaseModel.FK_OrderHeader_AddressBill_AddressId" />
         <AssociationConnector Association="WebStoreDatabaseModel.FK_OrderHeader_AddressShip_AddressId" />
         <AssociationConnector Association="WebStoreDatabaseModel.FK_OrderHeader_Customer_CustomerId" />
-        <AssociationConnector Association="WebStoreDatabaseModel.FK_OrderDetail_OrderHeader_OrderId" />
         <AssociationConnector Association="WebStoreDatabaseModel.FK_OrderHeader_ShippingMethodId" />
-      </Diagram>
+        <EntityTypeShape EntityType="WebStoreDatabaseModel.OrderDetail" Width="1.5" PointX="7.5" PointY="4" />
+        <AssociationConnector Association="WebStoreDatabaseModel.FK_OrderDetail_OrderHeader_OrderId" />
+        <AssociationConnector Association="WebStoreDatabaseModel.FK_OrderDetail_Product_ProductId" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

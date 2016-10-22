@@ -18,9 +18,9 @@ namespace WebStore.Models
         public int OrderId { get; set; }
         public int ProductId { get; set; }
         public int OrderOty { get; set; }
-        public string LineTotal { get; set; }
+        public Nullable<decimal> LineTotal { get; set; }
     
-        public virtual Product Product { get; set; }
         public virtual OrderHeader OrderHeader { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

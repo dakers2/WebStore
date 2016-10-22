@@ -22,21 +22,21 @@ namespace WebStore.Models
     
         public int OrderId { get; set; }
         public System.DateTime OrderDate { get; set; }
-        public System.DateTime ShipDate { get; set; }
+        public Nullable<System.DateTime> ShipDate { get; set; }
         public int CustomerId { get; set; }
-        public int ShipToAddress { get; set; }
-        public int BillToAddress { get; set; }
-        public int ShippingMethodId { get; set; }
+        public Nullable<int> ShipToAddress { get; set; }
+        public Nullable<int> BillToAddress { get; set; }
+        public Nullable<int> ShippingMethodId { get; set; }
         public decimal TotalDue { get; set; }
         public decimal SubTotal { get; set; }
-        public decimal TaxAmt { get; set; }
-        public decimal ShipAmt { get; set; }
+        public Nullable<decimal> TaxAmt { get; set; }
+        public Nullable<decimal> ShipAmt { get; set; }
     
         public virtual Address Address { get; set; }
         public virtual Address Address1 { get; set; }
         public virtual Customer Customer { get; set; }
+        public virtual Shipping Shipping { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-        public virtual Shipping Shipping { get; set; }
     }
 }

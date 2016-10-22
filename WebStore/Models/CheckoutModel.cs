@@ -24,7 +24,7 @@ namespace WebStore.Models
         [Required]
         public string State { get; set; }
         [Required]
-        public short Zipcode { get; set; }
+        public int? Zipcode { get; set; }
 
         [DisplayName("Shipping Method"), Required]
         public string ShippingMethod { get; set; }
@@ -42,22 +42,22 @@ namespace WebStore.Models
         public string ShippingState { get; set; }
 
         [DisplayName("Zipcode"), Required]
-        public int ShippingZipcode { get; set; }
+        public int? ShippingZipcode { get; set; }
 
         [DisplayName("Credit Card Number"), Required, CreditCard]
-        public int CreditCardNumber { get; set; }
+        public int? CreditCardNumber { get; set; }
 
         [DisplayName("Name On Card"), Required]
         public string CreditCardName { get; set; }
 
         [DisplayName("Expiration Month"), Required]
-        public string ExpirationMonth { get; set; }
+        public int? ExpirationMonth { get; set; }
 
         [DisplayName("Expiration Year"), Required]
-        public int ExpirationYear { get; set; }
+        public int? ExpirationYear { get; set; }
 
         [DisplayName("V-code"), Required]
-        public int VCode { get; set; }
+        public int? VCode { get; set; }
 
         [EmailAddress, Required]
         public string Email { get; set; }

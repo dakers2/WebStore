@@ -29,12 +29,12 @@ namespace WebStore.Models
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<webpages_Membership> webpages_Membership { get; set; }
         public virtual DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
         public virtual DbSet<webpages_Roles> webpages_Roles { get; set; }
-        public virtual DbSet<OrderHeader> OrderHeaders { get; set; }
         public virtual DbSet<Shipping> Shippings { get; set; }
+        public virtual DbSet<OrderHeader> OrderHeaders { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
     }
 }

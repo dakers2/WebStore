@@ -22,7 +22,7 @@ namespace WebStore.Controllers
                      Name = x.ProductName,
                      Description = x.Description,
                      Image = x.Image,
-                     Price = x.Price ?? 0
+                     Price = x.Price
                 }).ToList();
             }
             return View(model);
@@ -32,9 +32,7 @@ namespace WebStore.Controllers
         [HttpPost]
         public ActionResult Index(ProductModel model)
         {
-            // TODO: what happens when you click on a product
-            
-            return View(model);
+            return RedirectToAction("Index", "Product");
         }
     }
 }

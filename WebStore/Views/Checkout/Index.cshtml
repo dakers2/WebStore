@@ -5,131 +5,134 @@
 
 <h2>Checkout</h2>
 
-@using(Html.BeginForm())
-{ 
-    //@Html.ValidationSummary(false)
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        //@Html.ValidationSummary(false)
+        <div class="col-md-4">
+            <fieldset>
+                <legend>Customer Info</legend>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FirstName)
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", autofocus = "autofocus" })
+                    @Html.ValidationMessageFor(m => m.FirstName)
+                </div>
 
-    <fieldset>
-        <legend>Customer Info</legend>
-        <div class="form-group">
-            @Html.LabelFor(m => m.FirstName)
-            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.FirstName)
+                <div class="form-group">
+                    @Html.LabelFor(m => m.LastName)
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.LastName)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BillingAddress1)
+                    @Html.TextBoxFor(m => m.BillingAddress1, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.BillingAddress1)
+                </div>
+
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.BillingAddress2, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.BillingAddress2)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.City)
+                    @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.City)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.State)
+                    @Html.TextBoxFor(m => m.State, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.State)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Zipcode)
+                    @Html.TextBoxFor(m => m.Zipcode, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Zipcode)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email)
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "yourname@domain.com" })
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
+            </fieldset>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.LastName)
-            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.LastName)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.BillingAddress1)
-            @Html.TextBoxFor(m => m.BillingAddress1, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.BillingAddress1)
-        </div>
-
-        <div class="form-group">
-            @Html.TextBoxFor(m => m.BillingAddress2, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.BillingAddress2)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.City)
-            @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.City)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.State)
-            @Html.TextBoxFor(m => m.State, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.State)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Zipcode)
-            @Html.TextBoxFor(m => m.Zipcode, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Zipcode)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Email)
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "yourname@domain.com" })
-            @Html.ValidationMessageFor(m => m.Email)
-        </div>
-    </fieldset>
+        
 
 
-    <fieldset>
-        <legend>Payment Info</legend>
-        <div class="form-group">
-            @Html.LabelFor(m => m.CreditCardNumber)
-            @Html.TextBoxFor(m => m.CreditCardNumber, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.CreditCardNumber)
-        </div>
+        <fieldset>
+            <legend>Payment Info</legend>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CreditCardNumber)
+                @Html.TextBoxFor(m => m.CreditCardNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CreditCardNumber)
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.CreditCardName)
-            @Html.TextBoxFor(m => m.CreditCardName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.CreditCardName)
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CreditCardName)
+                @Html.TextBoxFor(m => m.CreditCardName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CreditCardName)
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.ExpirationMonth)
-            @Html.TextBoxFor(m => m.ExpirationMonth, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.ExpirationMonth)
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ExpirationMonth)
+                @Html.TextBoxFor(m => m.ExpirationMonth, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ExpirationMonth)
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.ExpirationYear)
-            @Html.TextBoxFor(m => m.ExpirationYear, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.ExpirationYear)
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ExpirationYear)
+                @Html.TextBoxFor(m => m.ExpirationYear, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ExpirationYear)
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.VCode)
-            @Html.TextBoxFor(m => m.VCode, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.VCode)
-        </div>
-    </fieldset>
+            <div class="form-group">
+                @Html.LabelFor(m => m.VCode)
+                @Html.TextBoxFor(m => m.VCode, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.VCode)
+            </div>
+        </fieldset>
 
-    <fieldset>
-        <legend>Shipping Info</legend>
-        <div class="form-group">
-            @Html.LabelFor(m => m.ShippingAddress1)
-            @Html.TextBoxFor(m => m.ShippingAddress1, new { @class = "form-control "})
-            @Html.ValidationMessageFor(m => m.ShippingAddress1)
-        </div>
+        <fieldset>
+            <legend>Shipping Info</legend>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ShippingAddress1)
+                @Html.TextBoxFor(m => m.ShippingAddress1, new { @class = "form-control " })
+                @Html.ValidationMessageFor(m => m.ShippingAddress1)
+            </div>
 
-        <div class="form-group">
-            @Html.TextBoxFor(m => m.ShippingAddress2, new { @class = "form-control " })
-            @Html.ValidationMessageFor(m => m.ShippingAddress2)
-        </div>
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.ShippingAddress2, new { @class = "form-control " })
+                @Html.ValidationMessageFor(m => m.ShippingAddress2)
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.ShippingCity)
-            @Html.TextBoxFor(m => m.ShippingCity, new { @class = "form-control " })
-            @Html.ValidationMessageFor(m => m.ShippingCity)
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ShippingCity)
+                @Html.TextBoxFor(m => m.ShippingCity, new { @class = "form-control " })
+                @Html.ValidationMessageFor(m => m.ShippingCity)
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.ShippingState)
-            @Html.TextBoxFor(m => m.ShippingState, new { @class = "form-control " })
-            @Html.ValidationMessageFor(m => m.ShippingState)
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ShippingState)
+                @Html.TextBoxFor(m => m.ShippingState, new { @class = "form-control " })
+                @Html.ValidationMessageFor(m => m.ShippingState)
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.ShippingZipcode)
-            @Html.TextBoxFor(m => m.ShippingZipcode, new { @class = "form-control " })
-            @Html.ValidationMessageFor(m => m.ShippingZipcode)
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ShippingZipcode)
+                @Html.TextBoxFor(m => m.ShippingZipcode, new { @class = "form-control " })
+                @Html.ValidationMessageFor(m => m.ShippingZipcode)
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.ShippingMethod)
-            @Html.DropDownList(m => m.ShippingMethod, Model.ShippingMethod.Select(x => new SelectListItem { Text = x, Value = x, Selected = x == Model.ShippingMethod }), new { @class = "form-control" }));
-            @Html.ValidationMessageFor(m => m.ShippingMethod)
-        </div>
-    </fieldset>
-    <input type="submit" class="btn btn-primary" title="Place Order"/>
-}
-
+            <div class="form-group">
+                @Html.LabelFor(m => m.ShippingMethod)
+                @Html.DropDownListFor(m => m.ShippingMethod, Model.ShippingList.Select(x => new SelectListItem { Text = x, Value = x }), new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ShippingMethod)
+            </div>
+        </fieldset>
+        <input type="submit" class="btn btn-primary" title="Place Order" />
+    }
+</div>

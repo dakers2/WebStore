@@ -13,7 +13,17 @@ namespace WebStore.Controllers
         public ActionResult Index()
         {
             CheckoutModel model = new CheckoutModel();
-            return View();
+            // TODO: check this order id = cust's order id
+            string orderId = Request.Cookies["OrderId"].Value;
+
+
+
+            using(WebStoreDatabaseEntities e = new WebStoreDatabaseEntities())
+            {
+                //gets shipping method
+                model.ShippingList = e.Shippings.Select(x => x.Method).ToList();
+            }
+            return View(model);
         }
 
         // POST: Checkout
@@ -23,24 +33,12 @@ namespace WebStore.Controllers
             if(ModelState.IsValid)
             {
                 // TODO: see if checkout works... 
-                // TODO: add ship method to checkout page
                 using (WebStoreDatabaseEntities entities = new WebStoreDatabaseEntities())
                 {
-                    int orderNumber = int.Parse(Request.Cookies["OrderNumber"].Value);
+                    int orderNumber = int.Parse(Request.Cookies["OrderId"].Value);
                     var orderHeader = entities.OrderHeaders.Single(x => x.OrderId == orderNumber);
-
-                    //gives me shipMethodIDs
-                    var shipping = entities.OrderHeaders.Select(x => x.ShipMethod);
-
-                    //turn IDs into actual shipping info
-                    string testship = entities
-
-                    var ShippingList = new List<string>();
-                    foreach (var method in shipping)
-                    {
-                        ShippingList.Add(method);
-                    }
-                    var shipMethod = entities.OrderHeaders.Single(x => x.ShipMethod == model.ShippingMethod);
+                    //looks at shipping table, gets method that equals model.method, then finds the ID for that method.
+                    var shipMethod = entities.Shippings.Single(x => x.Method == model.ShippingMethod).ShippingMethodId;
                     
                     var address = entities.Addresses.FirstOrDefault(
                         x => x.Line1 == model.ShippingAddress1
@@ -63,7 +61,6 @@ namespace WebStore.Controllers
                         entities.Addresses.Add(address);
                     }
                     orderHeader.ShipToAddress = address.AddressId;
-
                     entities.SaveChanges();
                 }
                 return RedirectToAction("Index", "Receipt");

@@ -1,15 +1,15 @@
 ﻿@model WebStore.Models.ProductModel 
+
 @{
-    ViewBag.Title = Model.Name;
-    string imgURL = Model.Image;
+    ViewBag.Title = "Index";
 }
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 col-md-4">
-            <img src=@imgURL />
+        <div class="col-sm-12 col-md-6">
+            <img src="~/Images/@Model.Image" />
         </div>
-        <div class="col-sm-12 col-md-8">
+        <div class="col-sm-12 col-md-6">
             <h2>@Model.Name</h2>
             <p>@Model.Description</p>
             <h3>@Model.Price.ToString("c")</h3>
@@ -21,10 +21,10 @@
                 <fieldset>
                     <div class="form-group">
                     @Html.LabelFor(m => m.Quantity)
-                    @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control", value = 1} // TODO: check if value can be used this way) 
+                    @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control"}) 
                     </div>
                 </fieldset>
-                <input type="submit" class="btn btn-primary" title="Add To Cart"/>
+                <input type="submit" class="btn btn-primary" value="Add To Cart"/>
             }
         </div>
     </div>   

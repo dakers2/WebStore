@@ -15,15 +15,16 @@ namespace WebStore.Controllers
         {
             ProductModel model = new ProductModel();
             using (WebStoreDatabaseEntities e = new WebStoreDatabaseEntities())
-            {
+            {                
                 var product = e.Products.Single(x => x.ProductId == id);
 
                 if(id != null)
                 {
                     model.Name = product.ProductName;
-                    model.Name = product.Image;
+                    model.Image = product.Image;
                     model.Description = product.Description;
-                    model.Price = product.Price??0; //if null, price is 0
+                    model.Price = product.Price;
+                    model.Quantity = 1;
                 }
                 else
                 {
@@ -43,27 +44,27 @@ namespace WebStore.Controllers
                 //create line item
                 OrderDetail detail = new OrderDetail();
                 detail.OrderOty = model.Quantity;
-
+                detail.ProductId = model.ID;
+                
                 OrderHeader header = new OrderHeader();
                 header.OrderDate = DateTime.UtcNow;
-                header.OrderId = e.OrderHeaders.Max(x => x.OrderId) + 1;
-
-                //Adds new order detail to order header
+                
+                //(ternary expression) Are there order headers? if yes, then do the thing, else = 1.
+                header.OrderId = e.OrderHeaders.Any() ? e.OrderHeaders.Max(x => x.OrderId) + 1 : 1;
+                detail.OrderId = header.OrderId;
+                
+                //Adds detail to order details
                 header.OrderDetails.Add(detail);
 
                 //TODO: Make sure people are registered and use THEIR customer ID.
                 header.CustomerId = e.Customers.First().CustomerId;
 
-                //get subtotal
                 header.SubTotal = model.Price * model.Quantity;
-
-                //Adds data to order header table
+                detail.LineTotal = header.SubTotal;
                 e.OrderHeaders.Add(header);
-
-                //Saves changes to the database now.
-                e.SaveChanges();
+                e.SaveChanges();           
             }
-            return RedirectToAction("Index", "Cart"); //determines what happens after clicking "add it to cart"
+            return RedirectToAction("Index", "Cart"); // TODO: cart page everything
         }
 
     }

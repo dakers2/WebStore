@@ -12,9 +12,13 @@ namespace WebStore.Controllers
         // GET: Cart
         public ActionResult Index()
         {
+            ProductModel model = new ProductModel();
+
             // TODO: add the index method here for what happens when the user gets to this page
             //get cookie and display cart data in model
-            return View();
+
+
+            return View(model);
         }
 
         // POST: Cart
@@ -24,14 +28,18 @@ namespace WebStore.Controllers
             //TODO: new entity (using), create line item, create the header, add new line item to header, 
             using (WebStoreDatabaseEntities e = new WebStoreDatabaseEntities())
             {
-                //int orderNumber = e.OrderHeader.Single(x => x.)
+                
+
+                //save cart as cookie so we can use this order on the checkout page
+                Response.Cookies.Add(new HttpCookie("orderId", 1.ToString()) { Expires = DateTime.Now.AddMinutes(15) });
+
+                //save to database
+                e.SaveChanges();
+
+                //clear the cookie after order is placed
             }
 
-            //save cart as cookie so we can use this order on the checkout page
 
-
-            //save to database
-            //clear the cookie after order is placed
             return RedirectToAction("Index", "Checkout");
         }
     }

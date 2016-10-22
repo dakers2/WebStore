@@ -91,7 +91,7 @@ namespace WebStore.Controllers
                     Mail mail = new Mail(from, subject, to, content);
 
                     client.client.mail.send.post(requestBody: mail.Get());
-
+                    // TODO: Register Complete Page?
                     return RedirectToAction("RegisterComplete");
                 }
             }
