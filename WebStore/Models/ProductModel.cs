@@ -15,5 +15,6 @@ namespace WebStore.Models
         public string Image { get; set; }
         public int CategoryId { get; set; }
         public bool Featured { get; set; }
+        public decimal LineTotal { get; set; }
     }
 }

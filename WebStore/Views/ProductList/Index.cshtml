@@ -9,8 +9,8 @@
     @foreach (var item in Model)
     {
         <div class="col-md-3 product">
-            <a href="/Product/Index/@item.ID"><img src="/Images/@item.Image" /></a>
-            <h3>@item.Name</h3>
+            <a href="/Product/Index/@item.ID"><img src="/Images/@item.Image" alt="@item.Name" /></a>
+            <a href="/Product/Index/@item.ID"><h3>@item.Name</h3></a>
             <p>@item.Price.ToString("c")</p>
         </div>
     }

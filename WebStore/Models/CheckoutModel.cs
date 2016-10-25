@@ -62,5 +62,7 @@ namespace WebStore.Models
         [EmailAddress, Required]
         public string Email { get; set; }
 
+        public int OrderId { get; set; }
+        public decimal TotalDue { get; set; }
     }
 }

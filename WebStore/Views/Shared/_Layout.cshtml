@@ -8,7 +8,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body id="bootstrap-override">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -24,9 +24,9 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Products", "Index", "ProductList")</li>
-                    @if(User.IsInRole("Administrator"))
+                    @*//Checks if user is logged in and an admin*@
+                    @if(User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
                     {
-                        // TODO: fix auth cookie persistance. maybe?
                         <li>@Html.ActionLink("Product Admin", "Index", "ProductAdmin")</li>
                     }
                 </ul>

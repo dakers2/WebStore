@@ -14,14 +14,17 @@ namespace WebStore.Controllers
         {
             CheckoutModel model = new CheckoutModel();
             // TODO: check this order id = cust's order id
-            string orderId = Request.Cookies["OrderId"].Value;
-
-
-
-            using(WebStoreDatabaseEntities e = new WebStoreDatabaseEntities())
+            int orderId = int.Parse(Request.Cookies["OrderId"].Value);
+            
+            using (WebStoreDatabaseEntities e = new WebStoreDatabaseEntities())
             {
-                //gets shipping method
+                var cart = e.OrderHeaders.Single(x => x.OrderId == orderId);
+                //gets shipping method for display
                 model.ShippingList = e.Shippings.Select(x => x.Method).ToList();
+                var shipPrice = e.Shippings.Single(x => x.Method == model.ShippingMethod).Price;
+
+                model.TotalDue = cart.SubTotal + shipPrice; 
+                // TODO: eventually add state tax, but for now assume the ship price includes some type of tax
             }
             return View(model);
         }
@@ -32,7 +35,7 @@ namespace WebStore.Controllers
         {
             if(ModelState.IsValid)
             {
-                // TODO: see if checkout works... 
+                // TODO: if check out... 
                 using (WebStoreDatabaseEntities entities = new WebStoreDatabaseEntities())
                 {
                     int orderNumber = int.Parse(Request.Cookies["OrderId"].Value);

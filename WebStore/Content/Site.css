@@ -1,6 +1,7 @@
-﻿body {
+﻿#bootstrap-override body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-size: 16px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -23,8 +24,9 @@ textarea {
     max-width: 280px;
 }
 
-.navbar-brand {
+#bootstrap-override .navbar-brand {
     font-family: 'Pacifico', cursive, sans-serif;
+    font-size: 26px;
 }
 
 .home-image {
@@ -44,6 +46,7 @@ textarea {
     font-style: italic;
     margin-top: 2px;
     margin-bottom: 30px;
+    color: #273235;
 }
 
 .product p {
@@ -51,6 +54,28 @@ textarea {
     margin-top: -50px;
 }
 
+#bootstrap-override .navbar-inverse {
+    background-color: #FFA69E;
+    border-color: #FF7E6B;
+}
+
+#bootstrap-override .navbar-inverse .navbar-brand {
+    color: #FFF7F8;
+}
+
+#bootstrap-override .navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+}
+
+.body-content {
+    margin-top: 51px;
+}
+
+#bootstrap-override .btn-primary {
+    color: #333;
+    background-color: #A9F0D1;
+    border-color: #A9F0D1;
+}
 
 /*
 

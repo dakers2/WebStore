@@ -179,6 +179,7 @@
     <Compile Include="Models\OrderDetail.cs">
       <DependentUpon>WebStoreEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderDetailsModel.cs" />
     <Compile Include="Models\OrderHeader.cs">
       <DependentUpon>WebStoreEntities.tt</DependentUpon>
     </Compile>

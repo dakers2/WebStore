@@ -12,12 +12,30 @@ namespace WebStore.Controllers
         // GET: Cart
         public ActionResult Index()
         {
-            ProductModel model = new ProductModel();
+            CartModel model = new CartModel();
+            
+            if (User.Identity.IsAuthenticated)
+            {
+                int orderId = int.Parse(Request.Cookies["OrderId"].Value);
+                using (WebStoreDatabaseEntities e = new WebStoreDatabaseEntities())
+                {
+                    var cart = e.OrderHeaders.Single(x => x.OrderId == orderId);
+                    model.Products = cart.OrderDetails.Select(x => new ProductModel
+                    {
+                        Name = x.Product.ProductName,
+                        Price = x.Product.Price,
+                        Quantity = x.OrderOty,
+                        ID = x.ProductId,
+                        LineTotal = (x.Product.Price * x.OrderOty)
+                    }).ToArray();
 
-            // TODO: add the index method here for what happens when the user gets to this page
-            //get cookie and display cart data in model
-
-
+                    model.Subtotal = model.Products.Sum(x => x.LineTotal);
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
             return View(model);
         }
 
@@ -28,18 +46,14 @@ namespace WebStore.Controllers
             //TODO: new entity (using), create line item, create the header, add new line item to header, 
             using (WebStoreDatabaseEntities e = new WebStoreDatabaseEntities())
             {
-                
-
                 //save cart as cookie so we can use this order on the checkout page
                 Response.Cookies.Add(new HttpCookie("orderId", 1.ToString()) { Expires = DateTime.Now.AddMinutes(15) });
 
-                //save to database
+                // TODO: finish creating line item, etc...
+                //model.ID = e.OrderDetails.
+
                 e.SaveChanges();
-
-                //clear the cookie after order is placed
             }
-
-
             return RedirectToAction("Index", "Checkout");
         }
     }

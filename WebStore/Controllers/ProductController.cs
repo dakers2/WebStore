@@ -64,7 +64,7 @@ namespace WebStore.Controllers
                 e.OrderHeaders.Add(header);
                 e.SaveChanges();           
             }
-            return RedirectToAction("Index", "Cart"); // TODO: cart page everything
+            return RedirectToAction("Index", "Cart");
         }
 
     }
