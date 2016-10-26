@@ -41,8 +41,12 @@
 </div>
 
 <div class="jumbotron">
-    <p class="lead"></p>
-    <p><a href="#" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <p>
+    Lorem ipsum dolor sit amet, ne prima feugait mandamus vix. 
+    Mea timeam periculis ei, nihil debitis similique te nec, nostro animal referrentur id mea. 
+    Discere impedit at qui, sed quis meliore suscipiantur ea, brute aliquam pertinax et mea.</p>
+    <a href="/Home/About" class="btn btn-primary btn-lg learn-more">Learn more &raquo;</a>
+    <div class="clearfix"></div>
 </div>
 
 <h2 class="featured">Featured Sweets</h2>
@@ -50,11 +54,10 @@
 <div class="row featured">
     @for(var i = 0; i < Model.Length; i++)
     {
-        <div class="col-xs-12 col-sm-6 col-md-3 text-center padding-fix">
-            <a href="/Product/index/@Model[i].ID">
-                
+        <div class="col-xs-8 col-sm-6 col-md-3 text-center padding-fix">
+            <a href="/Product/index/@Model[i].ID" class="wrapper">
+                <span class="caption text">@Model[i].Name</span>
                 <img src="~/Images/@Model[i].Image" alt="@Model[i].Name" />
-                <div class="caption"><h3>@Model[i].Name</h3></div>
             </a>
         </div>
     }

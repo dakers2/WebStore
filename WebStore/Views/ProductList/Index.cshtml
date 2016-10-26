@@ -3,12 +3,12 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Products</h2>
+<h2 class="fancy-name">Products</h2>
 
 <div class="row">
     @foreach (var item in Model)
     {
-        <div class="col-md-3 product">
+        <div class="col-sm-6 col-md-3 product">
             <a href="/Product/Index/@item.ID"><img src="/Images/@item.Image" alt="@item.Name" class="img-rounded" /></a>
             <a href="/Product/Index/@item.ID"><h3>@item.Name</h3></a>
             <p>@item.Price.ToString("c")</p>
