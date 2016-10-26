@@ -18,7 +18,7 @@ VALUES (1, 'Cake'),
 INSERT INTO Product (Featured, Quantity, ProductName, Price, Description, Image, CategoryId)
 VALUES 
 	(0, 100, 'Cheese Cake',	13.99, 'Usu et nostrum percipitur, ludus doming recteque ex vel. Quidam ceteros ex nec, cu quot aeterno bonorum vel. Veritus platonem.', 'cake-cheese.jpg', 	2),
-	(1, 100, 'Decorative Cake',	25.99, 'Munere altera regione an nam, ex nec consul electram abhorreant, offendit liberavisse complectitur id vel. An appetere complectitur pri, vim.', 'cake-decorative.jpg', 2),
+	(0, 100, 'Decorative Cake',	25.99, 'Munere altera regione an nam, ex nec consul electram abhorreant, offendit liberavisse complectitur id vel. An appetere complectitur pri, vim.', 'cake-decorative.jpg', 2),
 	(0, 100, 'Fruit Cake',	14.99, 'Velit dolore suavitate vim no, mel omittantur efficiantur ne, saepe delenit commune ea mea. Vim doming abhorreant ex, eos idque.', 'cake-fruit.jpg', 2),
 	(1, 100, 'Ice Cream Cake', 15.50, 'Lobortis adversarium duo eu. Mea et postea putent deterruisset, laudem facilisis ex pro. Cum solet mucius integre id, solum feugait.', 'cake-ice-cream.jpg', 2),
 	(0, 100, 'Layer Cake', 23.99,	'In ullum graecis vituperata vel, et fierent legendos efficiendi cum. Te per augue simul eruditi, eu eum doming minimum instructior.',	'cake-layer.jpg', 2),
@@ -35,7 +35,7 @@ VALUES
 	(0, 600, 'Christmas Cookies', 7.00, 'Probo illum sit id, veri fierent ancillae his te. Facer erroribus no vel, eum stet constituto liberavisse in.', 'cookie-christmas.jpg', 1),
 	(0, 340, 'Gingersnap', 4.50, 'Ei atqui copiosae instructior quo, eu vide tritani suavitate vis. Possim vidisse percipitur at est, ea usu vitae pertinax an.', 'cookies-gingersnap.jpg', 1),
 	(1, 5000, 'Brownie', 4.50, 'Eu audire verterem similique per, id ubique dissentias eam, purto malorum in est. No cum case placerat delicatissimi, pri iisque.', 'dessert-brownie.jpg', 3),
-	(1,666, 'Canada in a Cup', 7.00, 'No has ipsum expetenda, sea nemore saperet et. Ut vim meis quando labore, te tale.', 'dessert-canada.jpg', 3),
+	(1,666, 'Canada Cup', 7.00, 'No has ipsum expetenda, sea nemore saperet et. Ut vim meis quando labore, te tale.', 'dessert-canada.jpg', 3),
 	(0, 420, 'Dipped Fruit', 6.00, 'Sit eu etiam partem viderer. Tale partiendo constituto vim ei, ex homero repudiare complectitur sed.', 'dessert-fruit.jpg', 3),
 	(0, 670, 'Parfait', 6.00, 'Sea no quodsi aperiri, vim duis omittam cu. Pro delenit oportere temporibus ut, ne vel.', 'dessert-parfait.jpg', 3),
 	(0, 700, 'Tarts',	5.99, 'Purto eruditi cu mei, eu per option eloquentiam. No habeo probatus his, facer mucius at.', 'dessert-tart.jpg', 3),
